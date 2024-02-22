@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-1a25f3e3" version="1.0.4807">
+  <head std:sid="head-80e96794">
+    <screen std:sid="screen-e5afa5fc" id="new-screen" name="new-screen" width="400px" height="600px" active="true"/>
+    <cl:model std:sid="model-0f7d9736">
+      <cl:dataset std:sid="d-set-eca749d5" id="client">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-c789da1e" name="CLIENT_NO"/>
+          <cl:datacolumn std:sid="d-column-fba50a19" name="CLIENT_NM"/>
+          <cl:datacolumn std:sid="d-column-aa16f23d" name="REPRES_NM"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist/>
+      </cl:dataset>
+      <cl:datamap comment="거래처명" std:sid="d-map-da1b907e" id="account">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-490dee50" name="acc_name"/>
+        </cl:datacolumnlist>
+      </cl:datamap>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-e21ab096">
+    <cl:listener std:sid="listener-973cfedb" name="load" handler="onBodyLoad"/>
+    <cl:searchinput std:sid="s-input-b2440d5c" id="searchClient" placeholder="거래처명 혹은 거래처번호 검색">
+      <cl:listener std:sid="listener-bb1be233" name="value-change" handler="onSearchClientValueChange"/>
+      <cl:listener std:sid="listener-21244431" name="search" handler="onSearchClientSearch"/>
+      <cl:xylayoutdata std:sid="xyl-data-bd2376d2" top="75px" left="20px" width="360px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:searchinput>
+    <cl:output std:sid="output-a0dc9f31" style="border-bottom-color:#D0D0D0; font-weight:bold; border-bottom-width:4px; font-size:20px; border-bottom-style:solid;" value="  거래처 검색">
+      <cl:xylayoutdata std:sid="xyl-data-633744e0" top="20px" left="20px" width="360px" height="45px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:output>
+    <cl:grid std:sid="grid-ef76da3d" id="grd1" datasetid="client" resizablecolumns="all" columnMovable="true">
+      <cl:listener std:sid="listener-8b62a2a7" name="selection-change" handler="onGrd1SelectionChange2"/>
+      <cl:datamapbind property="rowIndexerStartNum" category="PROPERTY" datacontrolid="account" columnname="acc_name"/>
+      <cl:xylayoutdata std:sid="xyl-data-f03b3b63" top="120px" left="20px" width="360px" height="425px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:gridcolumn std:sid="g-column-70efa0a0" width="41px"/>
+      <cl:gridcolumn std:sid="g-column-73f3119d"/>
+      <cl:gridcolumn std:sid="g-column-b142682f"/>
+      <cl:gridcolumn std:sid="g-column-65d8ddd3"/>
+      <cl:gridheader std:sid="gh-band-b8df4591">
+        <cl:gridrow std:sid="g-row-41375e62"/>
+        <cl:gridcell std:sid="gh-cell-05abd027" rowindex="0" colindex="0"/>
+        <cl:gridcell std:sid="gh-cell-fd7b751e" rowindex="0" colindex="1" targetcolumnname="CLIENT_NO" sortable="false" filterable="false" text="거래처번호"/>
+        <cl:gridcell std:sid="gh-cell-762d84ac" rowindex="0" colindex="2" targetcolumnname="CLIENT_NM" sortable="false" filterable="false" text="거래처명"/>
+        <cl:gridcell std:sid="gh-cell-ea6fbd5d" rowindex="0" colindex="3" targetcolumnname="REPRES_NM" sortable="false" filterable="false" text="대표자성명"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-ecddc198">
+        <cl:gridrow std:sid="g-row-def7dcd3"/>
+        <cl:gridcell std:sid="gd-cell-bd3d6dff" rowindex="0" colindex="0" columntype="radio"/>
+        <cl:gridcell std:sid="gd-cell-fa10a2d6" rowindex="0" colindex="1" columnname="CLIENT_NO"/>
+        <cl:gridcell std:sid="gd-cell-b1aa156f" rowindex="0" colindex="2" columnname="CLIENT_NM"/>
+        <cl:gridcell std:sid="gd-cell-7ec75c05" rowindex="0" colindex="3" columnname="REPRES_NM"/>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:button std:sid="button-3cf77bba" value="확 인">
+      <cl:listener std:sid="listener-9037f56d" name="click" handler="onButtonClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-09da8652" top="555px" left="165px" width="70px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:xylayout std:sid="xylayout-23344de6"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler>
+      <std:guide position="510"/>
+    </std:hruler>
+    <std:vruler/>
+  </std:studiosetting>
+</html>

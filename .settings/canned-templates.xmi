@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings:CannedTemplate xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:settings="kr.co.tomatosystem.exbuilder.model.ui.settings" uuid="ec484ab2-fde1-439c-9174-00e81f7989bf" name="posMainTb" preferredWidth="865" preferredHeight="358" description="포스메인테이블">
+  <control xsi:type="cl:Grid" sid="grid-b5e52ec0" id="grd1" showDeletedRow="false" resizableColumns="all" columnMovable="true">
+    <layoutData xsi:type="cl:XYLayoutData" sid="xyl-data-1e134ceb" top="120px" left="50px" width="865px" height="358px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    <gridColumns sid="g-column-f06590c3" width="39px"/>
+    <gridColumns sid="g-column-12f200b9"/>
+    <gridColumns sid="g-column-f8ded6e0"/>
+    <gridColumns sid="g-column-77608b9d"/>
+    <gridColumns sid="g-column-1eaa8906"/>
+    <gridColumns sid="g-column-da5c5b86"/>
+    <gridColumns sid="g-column-5816aec4"/>
+    <gridColumns sid="g-column-b7c9b4d4"/>
+    <gridHeader sid="gh-band-4c262a38">
+      <gridRows sid="g-row-b3360e86"/>
+      <gridCells sid="gh-cell-bff4cda9" rowIndex="0" colIndex="1" targetColumnName="BAR_CODE" sortable="false" filterable="false" text="BAR_CODE"/>
+      <gridCells sid="gh-cell-3c1e7111" rowIndex="0" colIndex="2" targetColumnName="PROD_NM" sortable="false" filterable="false" text="PROD_NM"/>
+      <gridCells sid="gh-cell-035403bb" rowIndex="0" colIndex="3" targetColumnName="QTY" sortable="false" filterable="false" text="QTY"/>
+      <gridCells sid="gh-cell-fbcc8fcd" rowIndex="0" colIndex="4" targetColumnName="SALES_PR" sortable="false" filterable="false" text="SALES_PR"/>
+      <gridCells sid="gh-cell-ccf9fa87" rowIndex="0" colIndex="5" targetColumnName="TOTAL_PR" sortable="false" filterable="false" text="TOTAL_PR"/>
+      <gridCells sid="gh-cell-34308ec7" rowIndex="0" colIndex="6" targetColumnName="SALE_AMT" sortable="false" filterable="false" text="SALE_AMT"/>
+      <gridCells sid="gh-cell-3844f3a7" rowIndex="0" colIndex="7" targetColumnName="SALES_AMT" sortable="false" filterable="false" text="SALES_AMT"/>
+      <gridCells sid="gh-cell-dd235f32" rowIndex="0" colIndex="0">
+        <control xsi:type="cl:CheckBox" sid="c-box-295eb2ab" id="cbx2">
+          <layoutData xsi:type="cl:CellData" sid="c-data-9a168d78"/>
+        </control>
+      </gridCells>
+    </gridHeader>
+    <gridDetail sid="gd-band-7ef97004">
+      <gridRows sid="g-row-e693cbb1"/>
+      <gridCells sid="gd-cell-e5ca6e77" rowIndex="0" colIndex="1" columnName="BAR_CODE"/>
+      <gridCells sid="gd-cell-285c55c7" rowIndex="0" colIndex="2" columnName="PROD_NM"/>
+      <gridCells sid="gd-cell-1076ea36" rowIndex="0" colIndex="3" columnName="QTY"/>
+      <gridCells sid="gd-cell-37c65c16" rowIndex="0" colIndex="4" columnName="SALES_PR"/>
+      <gridCells sid="gd-cell-187c48ae" rowIndex="0" colIndex="5" columnName="TOTAL_PR"/>
+      <gridCells sid="gd-cell-c280047e" rowIndex="0" colIndex="6" columnName="SALE_AMT"/>
+      <gridCells sid="gd-cell-944d1cec" rowIndex="0" colIndex="7" columnName="SALES_AMT"/>
+      <gridCells sid="gd-cell-85cd03e8" rowIndex="0" colIndex="0">
+        <control xsi:type="cl:CheckBox" sid="c-box-20b14076" id="cbx1">
+          <layoutData xsi:type="cl:CellData"/>
+        </control>
+      </gridCells>
+    </gridDetail>
+  </control>
+</settings:CannedTemplate>

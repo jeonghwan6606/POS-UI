@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:cl="http://tomatosystem.co.kr/cleopatra" xmlns:std="http://tomatosystem.co.kr/cleopatra/studio" std:sid="html-a0966bd8" version="1.0.4740">
+  <head std:sid="head-fd9f9087">
+    <screen std:sid="screen-d35c14a1" id="default" name="default" minwidth="1024px" width="1024px" height="768px"/>
+    <screen std:sid="screen-ba427ad8" id="tablet" name="tablet" minwidth="500px" maxwidth="1023px" width="500px" height="667px"/>
+    <screen std:sid="screen-847bfb7d" id="mobile" name="mobile" maxwidth="499px" width="350px" height="525px"/>
+    <cl:model std:sid="model-6d3eda61">
+      <cl:dataset std:sid="d-set-b4fc758c" id="ds1">
+        <cl:datacolumnlist>
+          <cl:datacolumn std:sid="d-column-ff193c5d" name="isChecked"/>
+        </cl:datacolumnlist>
+        <cl:datarowlist>
+          <cl:datarow>
+            <cl:datavalue columnname="isChecked"><![CDATA[false]]></cl:datavalue>
+          </cl:datarow>
+          <cl:datarow>
+            <cl:datavalue columnname="isChecked"><![CDATA[false]]></cl:datavalue>
+          </cl:datarow>
+          <cl:datarow>
+            <cl:datavalue columnname="isChecked"><![CDATA[false]]></cl:datavalue>
+          </cl:datarow>
+          <cl:datarow>
+            <cl:datavalue columnname="isChecked"><![CDATA[false]]></cl:datavalue>
+          </cl:datarow>
+          <cl:datarow>
+            <cl:datavalue columnname="isChecked"><![CDATA[false]]></cl:datavalue>
+          </cl:datarow>
+        </cl:datarowlist>
+      </cl:dataset>
+    </cl:model>
+    <cl:appspec/>
+  </head>
+  <body std:sid="body-88f12068">
+    <cl:grid std:sid="grid-c19b633a" id="grd1" datasetid="ds1">
+      <cl:xylayoutdata std:sid="xyl-data-87e1394b" top="20px" left="20px" width="400px" height="200px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:gridcolumn std:sid="g-column-a05a1449" width="15px"/>
+      <cl:gridcolumn std:sid="g-column-699a74ba" width="25px"/>
+      <cl:gridcolumn std:sid="g-column-faae8358"/>
+      <cl:gridheader std:sid="gh-band-9021eb53">
+        <cl:gridrow std:sid="g-row-8af8f927" height="30px"/>
+        <cl:gridcell std:sid="gh-cell-82823e9a" rowindex="0" colindex="0" sortable="false" filterable="false"/>
+        <cl:gridcell std:sid="gh-cell-343a6c6e" rowindex="0" colindex="1" sortable="false" filterable="false" columntype="checkbox"/>
+        <cl:gridcell std:sid="gh-cell-55329ddc" rowindex="0" colindex="2" targetcolumnname="isChecked" sortable="false" filterable="false" text="isChecked"/>
+      </cl:gridheader>
+      <cl:griddetail std:sid="gd-band-a8adea74">
+        <cl:gridrow std:sid="g-row-f7d31640" height="30px"/>
+        <cl:gridcell std:sid="gd-cell-abb1ea47" rowindex="0" colindex="0" columntype="rowindex"/>
+        <cl:gridcell std:sid="gd-cell-3c680ff2" rowindex="0" colindex="1" columntype="checkbox"/>
+        <cl:gridcell std:sid="gd-cell-80b43c39" rowindex="0" colindex="2" columnname="isChecked">
+          <cl:checkbox std:sid="c-box-a5a3d1e8" id="cbx1" truevalue="true" falsevalue="false">
+            <cl:celldata std:sid="c-data-ce056272"/>
+          </cl:checkbox>
+        </cl:gridcell>
+      </cl:griddetail>
+    </cl:grid>
+    <cl:button std:sid="button-936594a1" value="columnType=checkbox 체크 상태&#xD;&#xA;&#xD;&#xA;(개발자도구 Console 확인)">
+      <cl:listener std:sid="listener-d3c16105" name="click" handler="onButtonClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-70278598" top="20px" left="430px" width="250px" height="70px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:button std:sid="button-d85d86d1" value="일반 체크박스 체크 상태&#xD;&#xA;&#xD;&#xA;(개발자도구 Console 확인)">
+      <cl:listener std:sid="listener-60a1353a" name="click" handler="onButtonClick2"/>
+      <cl:xylayoutdata std:sid="xyl-data-f18b4222" top="100px" left="430px" width="250px" height="70px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
+    <cl:xylayout std:sid="xylayout-29ced757"/>
+  </body>
+  <std:studiosetting>
+    <std:hruler/>
+    <std:vruler/>
+  </std:studiosetting>
+</html>
