@@ -220,7 +220,9 @@ function onButtonClick2(e) {
        
         var message = jsonObj.message;
     	alert(message);
-        
+    	
+        // 페이지 새로고침
+   		location.reload();
     });
 }
 

@@ -253,7 +253,7 @@ function onButtonClick2(e){
     	alert(message);
         
         //resetForm();
-        
+        location.reload();
         //getProductType();
     });
 	

@@ -168,7 +168,8 @@
 			       
 			        var message = jsonObj.message;
 			    	alert(message);
-			        
+			       
+			        location.reload(); 
 			    });
 			}
 
@@ -922,8 +923,8 @@
 				});
 				container.addChild(inputBox_10, {
 					"top": "390px",
-					"left": "728px",
-					"width": "257px",
+					"left": "735px",
+					"width": "250px",
 					"height": "35px"
 				});
 				var dateInput_1 = new cpr.controls.DateInput("BIR_DAY");

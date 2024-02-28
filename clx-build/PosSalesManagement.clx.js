@@ -71,26 +71,29 @@
 
 			}
 
-			function searchSaleList(){
-				    // 입력된 값들을 가져옵니다.
-				    
-				 TotalReset();	
-				 var cancelTy = app.lookup("cancelRadio");
-				 cancelTy.value = "0";   
-				     
+			function searchSaleList(callback) {
+			    var grd1 = app.lookup("grd1");
+			    var checkedRow = grd1.getRadioSelection(); // 체크된 행의 인덱스 배열 가져오기
+			    var salesSerNos = null;
+			    console.log(checkedRow);
+			    if (checkedRow !== -1) {
+			        var firstCheckedRow = grd1.getRow(checkedRow);
+			        salesSerNos = firstCheckedRow.getValue("SALES_SER_NO");
+			    }
+
+			    TotalReset();
+			    var cancelTy = app.lookup("cancelRadio");
+			    cancelTy.value = "0";
+
 			    var phNo = app.lookup("HDP_NO").value;
 			    var barcode = app.lookup("BAR_CODE").value;
 			    var salesTy = app.lookup("SALES_TY").value;
 
-			    // 날짜와 시간 값을 가져옵니다.
 			    var transStart = app.lookup("transStart").value;
 			    var transEnd = app.lookup("transEnd").value;
-
-			    // 변환된 날짜와 시간 값을 저장할 변수를 초기화합니다.
 			    var convertedTransStart = "";
 			    var convertedTransEnd = "";
 
-			    // 날짜 및 시간 값이 있는지 확인하고, 값이 있다면 변환합니다.
 			    if (transStart) {
 			        var dateTimeStart = convertDateTime(transStart);
 			        convertedTransStart = dateTimeStart.datePart;
@@ -102,7 +105,6 @@
 			        var convertedTimeEnd = dateTimeEnd.timePart;
 			    }
 
-			    // 서버로 전송할 데이터를 객체로 정의합니다.
 			    var requestData = {
 			        "phNo": phNo.toString(),
 			        "barcode": barcode,
@@ -113,86 +115,56 @@
 			        "transTmEnd": convertedTimeEnd
 			    };
 
-			    // 서브미션 생성
 			    var submission = new cpr.protocols.Submission();
-
-			    // 전송할 URL 설정
 			    submission.action = "/POS/GetSalesData.do";
-
-			    // response data의 type 설정
 			    submission.responseType = "javascript";
-
-			    // 서버로 전송할 데이터를 설정합니다.
 			    submission.setRequestObject(requestData);
-
-			    // 서브미션 전송
 			    submission.send();
-			    
+
 			    submission.addEventListener("submit-success", function(e) {
-				    var subMainList = e.control;
-				    var jsonObj = JSON.parse(subMainList.xhr.responseText);
-				    console.log(jsonObj);
-				
-				    // 가져온 데이터를 그리드에 표시하기
-				    var grd1 = app.lookup("grd1");
-				
-				    // 데이터셋 설정
-				    var ds2 = app.lookup("ds2");
-				    ds2.clear(); // 기존 데이터 모두 삭제
-				
-				    // 가져온 JSON 데이터를 데이터셋에 설정
-				    var dataList = jsonObj.salesData; // 예시 데이터에서 salesData로 설정했다고 가정
-				    for (var i = 0; i < dataList.length; i++) {
-				        var rowData = dataList[i];
-				        
-				        console.log(rowData);
-				        
-				        // TRANS_TY가 3이면 건너뜁니다.
-					    //if (rowData.TRANS_TY === '3') {
-					     //   continue;
-					   // }
-				        
-				        var newRow = ds2.addRow();
-				        var lastIndex = ds2.getRowCount() - 1;
-				        
-				        // 각 항목에 대해 직접 설정
-				        ds2.setValue(lastIndex, "SALES_SER_NO", rowData.SALES_SER_NO);
-				        // MEMB_SER_NO가 공백이면 "비회원"으로 설정
-						if (rowData.MEMB_SER_NO.trim() === '') {
-						    ds2.setValue(lastIndex, "MEMB_SER_NO", "비회원");
-						} else {
-						    ds2.setValue(lastIndex, "MEMB_SER_NO", rowData.MEMB_SER_NO);
-						}
-				        // CANC_TY 값에 따라 조건부로 설정
-						if (rowData.CANC_TY === '1') {
-						    ds2.setValue(lastIndex, "CANC_TY", rowData.CANC_TY);
-							grd1.setRowState(lastIndex, cpr.data.tabledata.RowState.UNCHANGED);
-						} else {
-						    ds2.setValue(lastIndex, "CANC_TY", '2');
-						}
-				        ds2.setValue(lastIndex, "SALES_AMT", rowData.TOTAL_SALES_AMT);
-				        ds2.setValue(lastIndex, "SALES_TY", rowData.SALES_TY);
-				        
-				        // TRANS_DT와 TRANS_TM 합치기
-				        var transDateTime = rowData.TRANS_DT + " " + rowData.TRANS_TM;
-				        ds2.setValue(lastIndex, "TRANS_TM", transDateTime);
-				        
-				         
-				    }
-				
-				});
-				
-				// 그리드 새로고침
-				//grd1.redraw();
-				  var grd2 = app.lookup("grd2");
-				  var rowCount = grd2.getRowCount() // 그리드의 행 수를 가져옵니다.
-				    
-				  console.log(rowCount);
-				  for (var i = rowCount - 1; i >= 0; i--) {
-				        grd2.deleteRow(i); // 각 행을 삭제합니다.
-				   }
-				   
-				   
+			        var subMainList = e.control;
+			        var jsonObj = JSON.parse(subMainList.xhr.responseText);
+			        console.log(jsonObj);
+
+			        var grd1 = app.lookup("grd1");
+			        var ds2 = app.lookup("ds2");
+			        ds2.clear();
+
+			        var dataList = jsonObj.salesData;
+			        for (var i = 0; i < dataList.length; i++) {
+			            var rowData = dataList[i];
+			            var newRow = ds2.addRow();
+			            var lastIndex = ds2.getRowCount() - 1;
+
+			            ds2.setValue(lastIndex, "SALES_SER_NO", rowData.SALES_SER_NO);
+			            if (rowData.MEMB_SER_NO.trim() === '') {
+			                ds2.setValue(lastIndex, "MEMB_SER_NO", "비회원");
+			            } else {
+			                ds2.setValue(lastIndex, "MEMB_SER_NO", rowData.MEMB_SER_NO);
+			            }
+			            if (rowData.CANC_TY === '1') {
+			                ds2.setValue(lastIndex, "CANC_TY", rowData.CANC_TY);
+			                grd1.setRowState(lastIndex, cpr.data.tabledata.RowState.UNCHANGED);
+			            } else {
+			                ds2.setValue(lastIndex, "CANC_TY", '2');
+			            }
+			            ds2.setValue(lastIndex, "SALES_AMT", rowData.TOTAL_SALES_AMT);
+			            ds2.setValue(lastIndex, "SALES_TY", rowData.SALES_TY);
+
+			            var transDateTime = rowData.TRANS_DT + " " + rowData.TRANS_TM;
+			            ds2.setValue(lastIndex, "TRANS_TM", transDateTime);
+			        }
+
+			        if (typeof callback === 'function') {
+			            callback();
+			        }
+			    });
+
+			    var grd2 = app.lookup("grd2");
+			    var rowCount = grd2.getRowCount()
+			    for (var i = rowCount - 1; i >= 0; i--) {
+			        grd2.deleteRow(i);
+			    }
 			}
 
 			// YYYY-MM-DD, HH:mm 형식의 문자열을 YYYYMMDDHHmm 형식으로 변환하는 함수
@@ -218,8 +190,21 @@
 			 * Grid의 행 선택 컬럼(columnType=radio)이 선택 되었을 때 발생하는 이벤트.
 			 */
 			function onGrd1RowRadioSelected(e){
+				var rowIndex = null;
+			     searchSalesProduct(rowIndex);
+			}
+
+			function searchSalesProduct(rowIndex) {
+			    console.log("salesProdcut를 검색합니다");
 			    var grd1 = app.lookup("grd1");
-			    var selectedRow = grd1.getSelectedRow(); // 선택된 행 가져오기
+			    var selectedRow;
+			    // rowIndex가 null이면 선택된 행을 가져옴
+			    if (rowIndex === null) {
+			        selectedRow = grd1.getSelectedRow(); // 선택된 행 가져오기
+			    } else {
+			        selectedRow = grd1.getRow(rowIndex); // 해당 인덱스의 행 가져오기
+			    }
+			    
 			    var salesSerNo = "";
 			    var salesTy = "";
 			    var salesAmt = "";
@@ -320,7 +305,6 @@
 				});
 			}
 
-
 			/*
 			 * "선택취소" 버튼에서 click 이벤트 발생 시 호출.
 			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
@@ -394,40 +378,83 @@
 			    // 서브미션 전송
 			    submission.send();
 			    // 서브미션 성공 이벤트 핸들러 등록
-			    submission.addEventListener("submit-success", function(event) {
-			     
+				submission.addEventListener("submit-success", function(event) {
 				    var sms1 = event.control;
 				    
 				    console.log(sms1.xhr.responseText);    
 				    var jsonObj = JSON.parse(sms1.xhr.responseText);    
 				    console.log(jsonObj);    
-			       
-			        var cancel = jsonObj.cancel;
-			    	
-			        console.log("Cancel:",cancel); 
-			        
-			        // cancel이 2이면 radio checked된 행 삭제
-			        if (cancel === 2) {
-			            // radio checked된 행 삭제
-			            grd1.deleteRow(checkedRow);
-			        }
-			        
-			        grd1.redraw();
-			        
-			    });
-			    
-			     alert("취소되었습니다.");
-			     
-			     var grd2 = app.lookup("grd2");
-					  var rowCount = grd2.getRowCount() // 그리드의 행 수를 가져옵니다.
-					    
-					  console.log(rowCount);
-					  for (var i = rowCount - 1; i >= 0; i--) {
-					        grd2.deleteRow(i); // 각 행을 삭제합니다.
-						}
-				searchSaleList();
-						
-				TotalReset();			
+				    
+				    var cancel = jsonObj.cancel;
+				    console.log("Cancel:",cancel); 
+				    
+				    // cancel이 2이면 radio checked된 행 삭제
+				    if (cancel === 2) {
+				        // radio checked된 행 삭제
+				        grd1.deleteRow(checkedRow);
+				    }
+				    
+				    searchSaleList(function() {
+				        // searchSaleList() 함수 실행 후에 처리할 내용을 이곳에 작성합니다.
+				        // 그리드의 행을 찾고 해당 행을 체크하는 코드를 여기에 작성합니다.
+				        
+				        var ds2 = app.lookup("ds2");
+				        var rows = grd1.getRowCount();
+				        console.log("Searching for sales_ser_No:", salesSerNos);
+				        var rowIndex = -1; // 일치하는 행의 인덱스를 저장할 변수입니다.
+				        
+				        for (var i = 0; i < rows; i++) {
+				            console.log("i:", i);
+				            var salesSerNo = ds2.getValue(i, "SALES_SER_NO"); // 현재 행의 판매 일련 번호를 가져옵니다.
+				            console.log("Current sales_ser_No:", salesSerNo);
+				            
+				            if (salesSerNo == salesSerNos) {
+				                // 해당 행의 인덱스를 저장합니다.
+				                rowIndex = i;
+				                console.log("rowIndex:",rowIndex);
+				                break; // 일치하는 행을 찾았으므로 루프를 종료합니다.
+				            }
+				        }
+				        
+				        console.log("totalReset");            
+				        TotalReset();
+				        
+				        // 일치하는 행을 찾은 경우에만 처리합니다.
+				        if (rowIndex !== -1) {
+				            console.log("Matching row found at index:", rowIndex);
+				            // grd1에서 해당 행을 체크합니다.
+				            grd1.selectRadio(rowIndex);
+				        }
+				        
+				        // 선택된 행을 기반으로 searchSalesProduct()를 실행합니다.
+			            var selectedRow = grd1.getRow(rowIndex); // 선택된 행 읽기
+			            var selectedRowConfirm = grd1.getSelectedRowIndex();
+			            
+			            console.log("selectedRowConfirm:",selectedRowConfirm);
+			            
+			            if (selectedRow) {
+			                // 선택된 행이 유효한 경우에만 실행합니다.
+			                var salesSerNo = selectedRow.getValue("SALES_SER_NO");
+			                console.log("Selected sales_ser_No:", salesSerNo);
+			                // searchSalesProduct() 함수 호출
+			                searchSalesProduct(rowIndex);
+			            } else {
+			                console.log("Selected row is not valid.");
+			            }
+			            
+				        alert("취소되었습니다.");
+				        
+				        var grd2 = app.lookup("grd2");
+				        var rowCount = grd2.getRowCount() // 그리드의 행 수를 가져옵니다.
+				        console.log(rowCount);
+				        for (var i = rowCount - 1; i >= 0; i--) {
+				            grd2.deleteRow(i); // 각 행을 삭제합니다.
+				        }
+				        
+				        
+				        
+				    });
+				});				
 			}
 
 			/*
@@ -461,7 +488,6 @@
 			    if (!confirm("전체 항목을 취소하시겠습니까?")) {
 			        return; // 사용자가 취소를 선택한 경우 함수 종료
 			    }
-			    
 			    
 			    
 				var grd2 = app.lookup("grd2");
@@ -527,21 +553,111 @@
 			            // radio checked된 행 삭제
 			            grd1.deleteRow(checkedRow);
 			        }
+			         searchSaleList(function() {
+				        // searchSaleList() 함수 실행 후에 처리할 내용을 이곳에 작성합니다.
+				        // 그리드의 행을 찾고 해당 행을 체크하는 코드를 여기에 작성합니다.
+				        
+				        var ds2 = app.lookup("ds2");
+				        var rows = grd1.getRowCount();
+				        console.log("Searching for sales_ser_No:", salesSerNos);
+				        var rowIndex = -1; // 일치하는 행의 인덱스를 저장할 변수입니다.
+				        
+				        for (var i = 0; i < rows; i++) {
+				            console.log("i:", i);
+				            var salesSerNo = ds2.getValue(i, "SALES_SER_NO"); // 현재 행의 판매 일련 번호를 가져옵니다.
+				            console.log("Current sales_ser_No:", salesSerNo);
+				            
+				            if (salesSerNo == salesSerNos) {
+				                // 해당 행의 인덱스를 저장합니다.
+				                rowIndex = i;
+				                console.log("rowIndex:",rowIndex);
+				                break; // 일치하는 행을 찾았으므로 루프를 종료합니다.
+				            }
+				        }
+				        
+				        console.log("totalReset");            
+				        TotalReset();
+				        
+				        // 일치하는 행을 찾은 경우에만 처리합니다.
+				        if (rowIndex !== -1) {
+				            console.log("Matching row found at index:", rowIndex);
+				            // grd1에서 해당 행을 체크합니다.
+				            grd1.selectRadio(rowIndex);
+				        }
+				        
+				        // 선택된 행을 기반으로 searchSalesProduct()를 실행합니다.
+			            var selectedRow = grd1.getRow(rowIndex); // 선택된 행 읽기
+			            var selectedRowConfirm = grd1.getSelectedRowIndex();
+			            
+			            console.log("selectedRowConfirm:",selectedRowConfirm);
+			            
+			            if (selectedRow) {
+			                // 선택된 행이 유효한 경우에만 실행합니다.
+			                var salesSerNo = selectedRow.getValue("SALES_SER_NO");
+			                console.log("Selected sales_ser_No:", salesSerNo);
+			                // searchSalesProduct() 함수 호출
+			                searchSalesProduct(rowIndex);
+			            } else {
+			                console.log("Selected row is not valid.");
+			            }
+			            
+				        alert("취소되었습니다.");
+				        
+				        var grd2 = app.lookup("grd2");
+				        var rowCount = grd2.getRowCount() // 그리드의 행 수를 가져옵니다.
+				        console.log(rowCount);
+				        for (var i = rowCount - 1; i >= 0; i--) {
+				            grd2.deleteRow(i); // 각 행을 삭제합니다.
+				        }
 			        
+				    }); 
 			    });
-			     
-			        
-			    alert("취소되었습니다.");
 			    
-			          var grd2 = app.lookup("grd2");
-					  var rowCount = grd2.getRowCount() // 그리드의 행 수를 가져옵니다.
-					    
-					  console.log(rowCount);
-					  for (var i = rowCount - 1; i >= 0; i--) {
-					        grd2.deleteRow(i); // 각 행을 삭제합니다.
-					  }
-				 searchSaleList();	  
-				 TotalReset();	  
+			    //--------------------다시 상품등록 (posmain)---------------------------
+				// 사용자에게 다시 계산 여부를 묻는 메시지 표시
+				if (confirm("취소된 품목들을 다시 계산하시겠습니까?")) {
+				    // 취소된 품목들을 저장할 배열 초기화
+				    // 취소된 품목들 배열을 추출
+				    var cancelledItems = [];
+				
+				    // 선택된 품목들의 행 데이터를 반복하여 처리
+				    for (var i = 0; i < selectedRowIndices.length; i++) {
+				        var rowIndex = selectedRowIndices[i];
+				        var selectedRow = grd2.getRow(rowIndex);
+				        var rowData = selectedRow.getRowData();
+				        
+				        // 각 행의 데이터를 맵으로 만들어서 배열에 추가
+				        var itemMap = {
+				            "barcode": rowData["BAR_CODE"],
+				            "qty": rowData["QTY"]
+				            // 다른 필요한 데이터도 필요에 따라 추가할 수 있습니다.
+				        };
+				        
+				        // 취소된 품목들 배열에 추가
+				        cancelledItems.push(itemMap);
+				    }
+				    
+				    console.log("Cancelled Items: ", cancelledItems); // 디버깅을 위한 출력
+				
+				    // POS 메인 페이지로 취소된 품목들 배열을 전달
+				    var page = "/POS/PosMain.do";
+				    
+				    // POST 요청을 보내기 위한 form 생성
+				    var form = document.createElement("form");
+				    form.method = "GET";
+				    form.action = page;
+				    
+				    // 취소된 품목들 배열을 form에 추가 (hidden input으로 추가)
+				    var input = document.createElement("input");
+				    input.type = "hidden";
+				    input.name = "cancelledItems";
+				    input.value = JSON.stringify(cancelledItems);
+				    form.appendChild(input);
+				    
+				    // form을 body에 추가하고 전송
+				    document.body.appendChild(form);
+				    form.submit();
+				}    
 			}
 
 			function TotalReset(){

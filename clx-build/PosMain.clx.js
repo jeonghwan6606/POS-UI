@@ -52,6 +52,11 @@
 			    
 			    console.log("totalPriceValue",totalPriceValue);
 			    
+			    var usedPoint = app.lookup("POINT").value;
+			    
+			    
+			    
+			    
 			    // 선택된 행들의 인덱스 배열을 가져옵니다.
 			    var selectedRowIndices = grd1.getCheckRowIndices();
 			    console.log(selectedRowIndices);
@@ -62,10 +67,8 @@
 			    }
 			    
 			    // 받은 돈(receivedAmount)의 값을 가져옵니다.
-			    var receivedAmountValue = parseCurrency(receivedAmount.value);
+			   // var receivedAmountValue = parseCurrency(receivedAmount.value);
 			    
-			    // 거스름돈 계산
-			    var changeAmountValue = receivedAmountValue - totalPriceValue;
 			    
 			    /*
 			    // 계산된 거스름돈을 변경된 입력값으로 설정합니다.
@@ -97,6 +100,15 @@
 			        console.log(finalChangeAmount);
 			        
 			        var finalReceivedAmount = parseCurrency(app.lookup("receivedAmount").value);
+			        var finalUsedPoint = parseCurrency(app.lookup("usedPoint").value);
+			        
+			        if (finalReceivedAmount === '' || isNaN(finalReceivedAmount)) {
+				        finalReceivedAmount = 0;
+				    }
+				    if (finalUsedPoint === '' || isNaN(finalUsedPoint)) {
+				        finalUsedPoint = 0;
+				    }
+			        
 			        
 			        // 각 선택된 행의 인덱스를 이용하여 해당 행의 데이터를 추출하여 배열에 추가합니다.
 			        for (var i = 0; i < selectedRowIndices.length; i++) {
@@ -117,7 +129,8 @@
 			            "selectedData": selectedData,
 			            "membNo": membNo,
 			            "changeAmount": finalChangeAmount.toString(),
-			            "receivedAmount": finalReceivedAmount.toString()
+			            "receivedAmount": finalReceivedAmount.toString(),
+			            "usedPoint": finalUsedPoint.toString()
 			        };
 			        
 			       
@@ -150,15 +163,13 @@
 			        receivedAmount.value = "";   
 			        totalPrice.value = "";
 			        changeAmountInput.value = "";
-			        var usedPoint = app.lookup("usedPoint");
-			        usedPoint.value = "";
+			        var usedPoints = app.lookup("usedPoint");
+			        usedPoints.value = "";
 			        
 			        membReset();
 			    }
 			     receivedAmount.value = "";   
-			     
-			     var usedPoint = app.lookup("usedPoint");
-			     usedPoint.value = "";
+			     usedPoints.value = "";
 			}
 
 			/*
@@ -296,6 +307,7 @@
 						        app.lookup("BUSI_NO").value = matchedRow["BUSI_NO"] || "";
 						        app.lookup("MEMB_SER_NO").value = matchedRow["MEMB_SER_NO"] || "";
 						        app.lookup("PH_NO").value = matchedRow["MOB_PH_NO"] || "";
+						        app.lookup("POINT").value = matchedRow["POINT"] || "";
 						    }
 						});
 				    } else {
@@ -517,114 +529,7 @@
 			 * Searchinput의 enter키 또는 검색버튼을 클릭하여 인풋의 값이 Search될때 발생하는 이벤트
 			 */
 			function onSearchInputSearch(e) {
-			    var searchInput = e.control;
-			    
-			    // 검색 인풋의 값을 가져옵니다.
-			    var inputValue = searchInput.value;
-			    
-			    // 서브미션 생성
-			    var subMainList = new cpr.protocols.Submission();
-			    
-			    // 전송할 URL 설정
-			    subMainList.action = "/POS/GetProdOne.do";
-			    
-			    // response data의 type 설정
-			    subMainList.responseType = "javascript"; // 예시로 JSON 형식으로 설정
-			    
-			    // 서버로 전송할 데이터를 설정합니다.
-			    subMainList.setParameters("searchValue", inputValue);
-			    
-			    // 서브미션 전송
-			    subMainList.send();
-			    
-			    // 서브미션의 응답 데이터를 처리하는 이벤트 핸들러 등록
-			    subMainList.addEventListener("receive", function(e) {
-			       var subMainList = e.control;
-				   console.log(subMainList.xhr.responseText);    
-				   var jsonObj = JSON.parse(subMainList.xhr.responseText);    
-				   console.log(jsonObj);    
-				        
-				   var grd1 = app.lookup("grd1"); 
-				   
-				   
-				   var ds1 = app.lookup("ds1");
-			    
-				    // 데이터셋에 추가하기 전에 기존 데이터를 모두 삭제할지 여부에 따라 결정
-				    // ds1.clear(); // 기존 데이터 모두 삭제
-				    
-					 // 바코드를 기준으로 해당 행을 찾습니다.
-				    var rowIndex = findRowIndexByBarcode(ds1, inputValue);
-				    
-					   // 바코드에 해당하는 행이 있을 경우에만 데이터를 업데이트합니다.
-				   // 바코드에 해당하는 행이 있을 경우에만 데이터를 업데이트합니다.
-			       if (rowIndex !== -1) {
-					    console.log("Row index found: " + rowIndex);
-					    
-					    // SELL_PR 값 업데이트
-					    console.log("Updating SALES_PR with value: " + jsonObj["ds1"]["SELL_PR"]);
-					    var sellPR = jsonObj["ds1"]["SELL_PR"];
-					    var prodNm = jsonObj["ds1"]["PROD_NM"];
-					    
-					    ds1.setValue(rowIndex, "PROD_NM",prodNm);
-					    ds1.setValue(rowIndex, "SALES_PR", sellPR);
-					    
-					    // SALE_PR 값 업데이트
-					    if (jsonObj["ds1"]["SALE_PR"] === null) {
-					        console.log("SALE_PR is null, setting SALE_AMT to 0");
-					        ds1.setValue(rowIndex, "SALE_PR", 0);
-					    } else {
-					        console.log("Updating SALE_AMT with value: " + jsonObj["ds1"]["SALE_PR"]);
-					        ds1.setValue(rowIndex, "SALE_PR", jsonObj["ds1"]["SALE_PR"]);
-					    }
-					     // 최초 수량을 1로 설정
-				        var qtyCmb = app.lookup("qty");
-				        qtyCmb.putValue("1");
-					    
-					     grd1.setEnabledTypedCell("checkbox",rowIndex, true);
-					    // 해당 행 체크
-				        grd1.setCheckRowIndex(rowIndex, true);
-					    calculateTotalPrice();
-					} else {
-					    console.log("Row index not found for barcode: " + inputValue);
-					}
-					
-					// 바코드가 중복될 경우 처리
-			    	handleDuplicateBarcode(ds1, inputValue);
-				});
-				
-				
-			 	var qty = app.lookup("qty");
-				// 바코드가 중복될 경우 처리
 			   
-				  
-			    /*
-			    // 서브미션의 응답 데이터를 처리하는 이벤트 핸들러 등록
-			    subMainList.addEventListener("submit-success", function(e) {
-			        var sms1 = e.control;
-			    
-				    var resCount = sms1.getResponseDataCount();
-				    for(var i = 0; i < resCount; i++){
-				        if(sms1.getResponseData(i).data.type == ""){
-				            console.log(sms1.getResponseData(i).data.getRowDataRanged());
-				        }else{
-				            console.log(sms1.getResponseData(i).data.getDatas());
-				        }
-				    }
-				        
-			        // 받은 응답 데이터를 처리하거나 필요한 작업을 수행할 수 있습니다.
-			        // 예를 들어, 받은 데이터를 그리드에 표시할 수 있습니다.
-			        // grd1.getBindDataset().setRecords(responseData);
-			    });
-			    */
-			    
-			    var totalPriceInput = app.lookup("TOTAL_PRICE");
-			    var changeAmountInput = app.lookup("changeAmount");
-			    var receivedAmountInput = app.lookup("receivedAmount");
-			    var usedPoint = app.lookup("usedPoint");
-			    receivedAmountInput.value = "";
-				changeAmountInput.value = "";
-				usedPoint.value = "";
-
 			}
 
 			// 바코드에 해당하는 행의 인덱스를 찾는 함수
@@ -865,6 +770,7 @@
 			    app.lookup("BUSI_NO").value = "";
 			    app.lookup("MEMB_SER_NO").value = "";
 			    app.lookup("PH_NO").value = "";
+			    app.lookup("POINT").value = "";
 			}
 
 			/*
@@ -1080,7 +986,7 @@
 				
 			    var mEMB_SER_NO = e.control;
 			    var point = app.lookup("usedPoint");
-			    var membPoint = app.lookup("ipb7");
+			    var membPoint = app.lookup("POINT");
 				point.value = '';
 			    if (mEMB_SER_NO.value.trim() === '') {         
 			        point.readOnly = true; // usedPoint를 읽기 전용으로 설정
@@ -1113,32 +1019,57 @@
 			function onUsedPointValueChange(e){
 				var usedPoint = e.control;
 				
-				 var totalPriceInput = app.lookup("TOTAL_PRICE");
+				
+				var totalPriceInput = app.lookup("TOTAL_PRICE");
 			    var changeAmountInput = app.lookup("changeAmount");
 			    var receivedAmount = app.lookup("receivedAmount");
 				var usedPointValue = parseCurrency(app.lookup("usedPoint").value);
 
+				var unusedPointValue = parseCurrency(app.lookup("POINT").value);
 				
+				var totalPriceCurrency = parseCurrency(totalPriceInput.value);
 
 				 // 입력값이 공백인 경우
 			    if (usedPointValue === '' || isNaN(usedPointValue)) {
 			        usedPoint.value = ''; // 거스름돈을 공백으로 설정합니다.
+			        
+			        return;
 			    } else {
-			       // 받은 돈이 숫자가 아니거나 음수인 경우 처리
+			       	// 받은 돈이 숫자가 아니거나 음수인 경우 처리
 				    if (usedPointValue < 0) {
 				        alert("사용할 포인트는 양수이어야 합니다."); // 받은 금액이 양수여야 함을 알리는 경고 메시지
-				        receivedAmount.value = "";
+				        usedPoint.value = "";
 				        return;
 				    }
 			    
+			    	
 			    
-			    
+			    	if(usedPointValue > unusedPointValue){
+			    		alert("사용가능한 포인트를 초과하였습니다.")
+			    		usedPoint.value = '';
+			    		return;
+			    	}
+			    	 	
+			    	if(usedPointValue > totalPriceCurrency){
+			 		
+			    		usedPoint.value = formatCurrency(totalPriceCurrency);
+			    		return;
+			    	}
+			    	
+				    if (!confirm("포인트를 사용하시겠습니까?")) {
+				        usedPoint.value = ''; // 포인트를 사용하지 않을 경우 공백으로 설정
+				        return;
+				    }	        
+					    
 				    // 변환된 값을 다시 포맷하여 문자열로 변경
 				    var usedPointValueFormatted = formatCurrency(usedPointValue);
-				    
-				    // 받은 돈 입력값을 다시 설정
+				   
+				   	// 받은 돈 입력값을 다시 설정
 				    app.lookup("usedPoint").value = usedPointValueFormatted;
+				   
 				 }   
+				 
+				
 				  // 거스름돈 계산
 				 calculateChange(receivedAmount, totalPriceInput, changeAmountInput);
 			    
@@ -1150,6 +1081,11 @@
 			 */
 			function onUsedPointInput(e){
 				var usedPoint = e.control;
+				alert("아직 준비중인 기능입니다.");
+				usedPoint.value = "";
+				return;
+				
+				
 				 var totalPriceInput = app.lookup("TOTAL_PRICE");
 			    var changeAmountInput = app.lookup("changeAmount");
 			    var receivedAmount = app.lookup("receivedAmount");
@@ -1157,6 +1093,13 @@
 
 				if (parseCurrency(totalPriceInput.value) === '' || isNaN(parseCurrency(totalPriceInput.value))) {
 			        alert("계산할 상품이 없습니다.");
+			        usedPoint.value = "";
+			        return;// 거스름돈을 공백으로 설정합니다.
+			    }
+			    
+			    var point = app.lookup("POINT").value;
+			    if (parseCurrency(point) === '' || isNaN(parseCurrency(point))) {
+			        alert("사용 가능한 포인트가 없습니다.");
 			        usedPoint.value = "";
 			        return;// 거스름돈을 공백으로 설정합니다.
 			    }
@@ -1179,6 +1122,155 @@
 			        alert("계산할 상품이 없습니다.");
 			        receivedAmount.value = "";
 			        return;// 거스름돈을 공백으로 설정합니다.
+			    }
+			}
+
+			/*
+			 * 인풋 박스에서 before-value-change 이벤트 발생 시 호출.
+			 * 변경된 value가 저장되기 전에 발생하는 이벤트. 다음 이벤트로 value-change가 발생합니다.
+			 */
+			function onUsedPointBeforeValueChange(e){
+				var usedPoint = e.control;
+				
+			}
+
+			/*
+			 * 서치 인풋에서 value-change 이벤트 발생 시 호출.
+			 * SearchInput의 value를 변경하여 변경된 값이 저장된 후에 발생하는 이벤트.
+			 */
+			function onSearchInputValueChange2(e){
+				 var searchInput = e.control;
+			    
+			    // 검색 인풋의 값을 가져옵니다.
+			    var inputValue = searchInput.value;
+			    
+			    // 서브미션 생성
+			    var subMainList = new cpr.protocols.Submission();
+			    
+			    // 전송할 URL 설정
+			    subMainList.action = "/POS/GetProdOne.do";
+			    
+			    // response data의 type 설정
+			    subMainList.responseType = "javascript"; // 예시로 JSON 형식으로 설정
+			    
+			    // 서버로 전송할 데이터를 설정합니다.
+			    subMainList.setParameters("searchValue", inputValue);
+			    
+			    // 서브미션 전송
+			    subMainList.send();
+			    
+			    // 서브미션의 응답 데이터를 처리하는 이벤트 핸들러 등록
+				subMainList.addEventListener("receive", function(e) {
+				    var subMainList = e.control;
+				    console.log(subMainList.xhr.responseText);    
+				    var jsonObj = JSON.parse(subMainList.xhr.responseText);    
+				    console.log(jsonObj);    
+				    
+				    var grd1 = app.lookup("grd1"); 
+				    
+				    var ds1 = app.lookup("ds1");
+				
+				    // 데이터셋에 추가하기 전에 기존 데이터를 모두 삭제할지 여부에 따라 결정
+				    // ds1.clear(); // 기존 데이터 모두 삭제
+				    
+				    // 바코드를 기준으로 해당 행을 찾습니다.
+				    var rowIndex = findRowIndexByBarcode(ds1, inputValue);
+				    
+				    // 바코드에 해당하는 행이 있을 경우에만 데이터를 업데이트합니다.
+				    if (jsonObj["ds1"] !== null && rowIndex !== -1) {
+				        console.log("Row index found: " + rowIndex);
+				        
+				        // SELL_PR 값 업데이트
+				        console.log("Updating SALES_PR with value: " + jsonObj["ds1"]["SELL_PR"]);
+				        var sellPR = jsonObj["ds1"]["SELL_PR"];
+				        var prodNm = jsonObj["ds1"]["PROD_NM"];
+				        
+				        ds1.setValue(rowIndex, "PROD_NM",prodNm);
+				        ds1.setValue(rowIndex, "SALES_PR", sellPR);
+				        
+				        // SALE_PR 값 업데이트
+				        if (jsonObj["ds1"]["SALE_PR"] === null) {
+				            console.log("SALE_PR is null, setting SALE_AMT to 0");
+				            ds1.setValue(rowIndex, "SALE_PR", 0);
+				        } else {
+				            console.log("Updating SALE_AMT with value: " + jsonObj["ds1"]["SALE_PR"]);
+				            ds1.setValue(rowIndex, "SALE_PR", jsonObj["ds1"]["SALE_PR"]);
+				        }
+				         // 최초 수량을 1로 설정
+				        var qtyCmb = app.lookup("qty");
+				        qtyCmb.putValue("1");
+				        
+				         grd1.setEnabledTypedCell("checkbox",rowIndex, true);
+				        // 해당 행 체크
+				        grd1.setCheckRowIndex(rowIndex, true);
+				        calculateTotalPrice();
+				    } else {
+				        console.log("Row index not found for barcode: " + inputValue);
+				        // 바코드에 해당하는 행이 없으면 입력된 행 삭제
+				        alert("바코드에 해당하는 상품이 없습니다.");
+				        grd1.deleteRow(rowIndex);
+				    }
+				    
+				    // 바코드가 중복될 경우 처리
+				    handleDuplicateBarcode(ds1, inputValue);
+				});
+				
+				
+			 	var qty = app.lookup("qty");
+				// 바코드가 중복될 경우 처리
+			   
+				  
+			    /*
+			    // 서브미션의 응답 데이터를 처리하는 이벤트 핸들러 등록
+			    subMainList.addEventListener("submit-success", function(e) {
+			        var sms1 = e.control;
+			    
+				    var resCount = sms1.getResponseDataCount();
+				    for(var i = 0; i < resCount; i++){
+				        if(sms1.getResponseData(i).data.type == ""){
+				            console.log(sms1.getResponseData(i).data.getRowDataRanged());
+				        }else{
+				            console.log(sms1.getResponseData(i).data.getDatas());
+				        }
+				    }
+				        
+			        // 받은 응답 데이터를 처리하거나 필요한 작업을 수행할 수 있습니다.
+			        // 예를 들어, 받은 데이터를 그리드에 표시할 수 있습니다.
+			        // grd1.getBindDataset().setRecords(responseData);
+			    });
+			    */
+			    
+			    var totalPriceInput = app.lookup("TOTAL_PRICE");
+			    var changeAmountInput = app.lookup("changeAmount");
+			    var receivedAmountInput = app.lookup("receivedAmount");
+			    var usedPoint = app.lookup("usedPoint");
+			    receivedAmountInput.value = "";
+				changeAmountInput.value = "";
+				usedPoint.value = "";
+
+				
+			}
+
+			/*
+			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
+			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
+			 */
+			function onBodyLoad2(e) {
+			    var paramValue = cpr.core.Platform.INSTANCE.getParameter("cancelledItems");
+			    console.log(paramValue);
+			    
+			    if (paramValue) {
+			        var ds1 = app.lookup("ds1");
+			        
+			        // 취소된 품목들을 순회하면서 데이터셋에 추가
+			        for (var i = 0; i < paramValue.length; i++) {
+			            var item = paramValue[i];
+			            var barcode = item["barcode"];
+			            var qty = item["qty"];
+			            
+			            // 새로운 행을 추가하고 값을 설정
+			            ds1.addRow({"BAR_CODE": barcode, "QTY": qty});
+			        }
 			    }
 			};
 			// End - User Script
@@ -1400,8 +1492,11 @@
 									if(typeof onSearchInputSearch == "function") {
 										searchInput_1.addEventListener("search", onSearchInputSearch);
 									}
-									if(typeof onSearchInputValueChange == "function") {
-										searchInput_1.addEventListener("value-change", onSearchInputValueChange);
+									if(typeof onSearchInputValueChange2 == "function") {
+										searchInput_1.addEventListener("value-change", onSearchInputValueChange2);
+									}
+									if(typeof onSearchInputInput == "function") {
+										searchInput_1.addEventListener("input", onSearchInputInput);
 									}
 									searchInput_1.bind("value").toDataColumn("BAR_CODE");
 									return searchInput_1;
@@ -1764,7 +1859,7 @@
 					"width": "150px",
 					"height": "25px"
 				});
-				var inputBox_9 = new cpr.controls.InputBox("ipb7");
+				var inputBox_9 = new cpr.controls.InputBox("POINT");
 				inputBox_9.readOnly = true;
 				inputBox_9.lengthUnit = "utf8";
 				inputBox_9.style.css({
@@ -2022,7 +2117,7 @@
 			});
 			
 			var inputBox_12 = new cpr.controls.InputBox("usedPoint");
-			inputBox_12.readOnly = false;
+			inputBox_12.readOnly = true;
 			inputBox_12.inputFilter = "[0-9]";
 			inputBox_12.style.css({
 				"border-radius" : "0px 3px 3px 0px"
@@ -2032,6 +2127,9 @@
 			}
 			if(typeof onUsedPointInput == "function") {
 				inputBox_12.addEventListener("input", onUsedPointInput);
+			}
+			if(typeof onUsedPointBeforeValueChange == "function") {
+				inputBox_12.addEventListener("before-value-change", onUsedPointBeforeValueChange);
 			}
 			container.addChild(inputBox_12, {
 				"top": "597px",
@@ -2054,8 +2152,8 @@
 				"width": "61px",
 				"height": "29px"
 			});
-			if(typeof onBodyLoad == "function"){
-				app.addEventListener("load", onBodyLoad);
+			if(typeof onBodyLoad2 == "function"){
+				app.addEventListener("load", onBodyLoad2);
 			}
 		}
 	});

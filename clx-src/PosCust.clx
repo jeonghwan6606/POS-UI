@@ -94,7 +94,7 @@
         <cl:xylayoutdata std:sid="xyl-data-08326d39" top="390px" left="641px" width="95px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:output>
       <cl:inputbox std:sid="i-box-a68f0efb" id="ADDR_2" style="border-radius:0px 5px 5px 0px;" placeholder="상세주소">
-        <cl:xylayoutdata std:sid="xyl-data-f7af3c5a" top="390px" left="728px" width="257px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+        <cl:xylayoutdata std:sid="xyl-data-f7af3c5a" top="390px" left="735px" width="250px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
       <cl:dateinput std:sid="d-input-b2449a01" id="BIR_DAY" placeholder="YYYY-MM-DD">
         <cl:xylayoutdata std:sid="xyl-data-d0ca9ec3" top="208px" left="735px" width="160px" height="35px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>

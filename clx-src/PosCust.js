@@ -155,7 +155,8 @@ function onButtonClick(e){
        
         var message = jsonObj.message;
     	alert(message);
-        
+       
+        location.reload(); 
     });
 }
 

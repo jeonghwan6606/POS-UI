@@ -266,7 +266,7 @@
 			    	alert(message);
 			        
 			        //resetForm();
-			        
+			        location.reload();
 			        //getProductType();
 			    });
 				

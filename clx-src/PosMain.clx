@@ -49,7 +49,7 @@
     <cl:appspec/>
   </head>
   <body std:sid="body-afe2a2b6" style="border-right-style:solid; border-top-width:1px; border-bottom-color:black; border-right-width:1px; border-left-color:black; border-right-color:black; border-left-width:1px; border-top-style:solid; border-left-style:solid; border-bottom-width:1px; border-top-color:black; border-bottom-style:solid;" overscrollbehavior="none">
-    <cl:listener std:sid="listener-e36a3a97" name="load" handler="onBodyLoad"/>
+    <cl:listener std:sid="listener-9248c777" name="load" handler="onBodyLoad2"/>
     <cl:grid std:sid="grid-b5e52ec0" id="grd1" datasetid="ds1" showdeletedrow="false" resizablecolumns="all" columnMovable="true">
       <std:metadata>
         <std:property key="template-uuid" value="ec484ab2-fde1-439c-9174-00e81f7989bf"/>
@@ -85,7 +85,8 @@
         <cl:gridcell std:sid="gd-cell-e5ca6e77" rowindex="0" colindex="1" columnname="BAR_CODE">
           <cl:searchinput std:sid="s-input-5bb3dfe6">
             <cl:listener std:sid="listener-56932795" name="search" handler="onSearchInputSearch"/>
-            <cl:listener std:sid="listener-493fc895" name="value-change" handler="onSearchInputValueChange"/>
+            <cl:listener std:sid="listener-42461237" name="value-change" handler="onSearchInputValueChange2"/>
+            <cl:listener std:sid="listener-aa6f93fa" name="input" handler="onSearchInputInput"/>
             <cl:celldata std:sid="c-data-2546c6ab"/>
           </cl:searchinput>
         </cl:gridcell>
@@ -190,7 +191,7 @@
         <cl:listener std:sid="listener-60f6cbb3" name="input" handler="onBUSI_NOInput"/>
         <cl:xylayoutdata std:sid="xyl-data-16a9ced0" top="134px" left="380px" width="150px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
-      <cl:inputbox std:sid="i-box-c8f430d1" id="ipb7" style="border-radius:0px 3px 3px 0px;" readonly="true" lengthunit="utf8">
+      <cl:inputbox std:sid="i-box-c8f430d1" id="POINT" style="border-radius:0px 3px 3px 0px;" readonly="true" lengthunit="utf8">
         <cl:listener std:sid="listener-ba047f39" name="value-change" handler="onIpb7ValueChange"/>
         <cl:xylayoutdata std:sid="xyl-data-2039afa8" top="70px" left="380px" width="150px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
@@ -252,9 +253,10 @@
     <cl:inputbox std:sid="i-box-447ad32c" id="Total_Buy" style="border-radius:0px 3px 3px 0px;" visible="false" readonly="true" lengthunit="utf8">
       <cl:xylayoutdata std:sid="xyl-data-4c8aef95" top="715px" left="121px" width="150px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:inputbox>
-    <cl:inputbox std:sid="i-box-c165c113" id="usedPoint" style="border-radius:0px 3px 3px 0px;" readonly="false" inputfilter="[0-9]">
+    <cl:inputbox std:sid="i-box-c165c113" id="usedPoint" style="border-radius:0px 3px 3px 0px;" readonly="true" inputfilter="[0-9]">
       <cl:listener std:sid="listener-fdd258cc" name="value-change" handler="onUsedPointValueChange"/>
       <cl:listener std:sid="listener-fde74cbe" name="input" handler="onUsedPointInput"/>
+      <cl:listener std:sid="listener-41bb19fa" name="before-value-change" handler="onUsedPointBeforeValueChange"/>
       <cl:xylayoutdata std:sid="xyl-data-fcf8806f" top="597px" left="744px" width="150px" height="29px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:inputbox>
     <cl:htmlsnippet std:sid="htmlsnippet-76d1cee2" style="border-radius:10px 0px 0px 10px; background-color:#EDEDED; vertical-align:middle; text-align:center;" value="포인트">
