@@ -644,6 +644,7 @@ function onButtonClick2(e){
 	    // form을 body에 추가하고 전송
 	    document.body.appendChild(form);
 	    form.submit();
+	   
 	}    
 }
 

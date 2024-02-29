@@ -461,15 +461,7 @@
 			        });
 			    }
 			    
-			    // 데이터셋에 값이 제대로 추가되었는지 확인하기 위해 콘솔에 로그를 출력합니다.
-			    console.log(qtySet.getRowCount());
-			    
-			    console.log("Data in qtySet dataset:");
-			    for (var j = 0; j < qtySet.getRowCount(); j++) {
-			        var label = qtySet.getValue(j, "label");
-			        var value = qtySet.getValue(j, "value");
-			        console.log("Row " + j + ": label = " + label + ", value = " + value);
-			    }
+
 			    
 			    // 삽입된 행의 체크박스를 비활성화합니다.
 			    var newRowIndex = (grd1.rowCount - 1); // 삽입된 행의 인덱스
@@ -1139,12 +1131,45 @@
 			 * SearchInput의 value를 변경하여 변경된 값이 저장된 후에 발생하는 이벤트.
 			 */
 			function onSearchInputValueChange2(e){
-				 var searchInput = e.control;
+				var searchInput = e.control;
 			    
 			    // 검색 인풋의 값을 가져옵니다.
 			    var inputValue = searchInput.value;
+
+			    getProductOne(inputValue);
+				  
+			    /*
+			    // 서브미션의 응답 데이터를 처리하는 이벤트 핸들러 등록
+			    subMainList.addEventListener("submit-success", function(e) {
+			        var sms1 = e.control;
 			    
-			    // 서브미션 생성
+				    var resCount = sms1.getResponseDataCount();
+				    for(var i = 0; i < resCount; i++){
+				        if(sms1.getResponseData(i).data.type == ""){
+				            console.log(sms1.getResponseData(i).data.getRowDataRanged());
+				        }else{
+				            console.log(sms1.getResponseData(i).data.getDatas());
+				        }
+				    }
+				        
+			        // 받은 응답 데이터를 처리하거나 필요한 작업을 수행할 수 있습니다.
+			        // 예를 들어, 받은 데이터를 그리드에 표시할 수 있습니다.
+			        // grd1.getBindDataset().setRecords(responseData);
+			    });
+			    */
+			    
+			    var totalPriceInput = app.lookup("TOTAL_PRICE");
+			    var changeAmountInput = app.lookup("changeAmount");
+			    var receivedAmountInput = app.lookup("receivedAmount");
+			    var usedPoint = app.lookup("usedPoint");
+			    receivedAmountInput.value = "";
+				changeAmountInput.value = "";
+				usedPoint.value = "";
+
+			}
+
+			function getProductOne(inputValue){
+				    // 서브미션 생성
 			    var subMainList = new cpr.protocols.Submission();
 			    
 			    // 전송할 URL 설정
@@ -1200,7 +1225,7 @@
 				        var qtyCmb = app.lookup("qty");
 				        qtyCmb.putValue("1");
 				        
-				         grd1.setEnabledTypedCell("checkbox",rowIndex, true);
+				        grd1.setEnabledTypedCell("checkbox",rowIndex, true);
 				        // 해당 행 체크
 				        grd1.setCheckRowIndex(rowIndex, true);
 				        calculateTotalPrice();
@@ -1218,59 +1243,42 @@
 				
 			 	var qty = app.lookup("qty");
 				// 바코드가 중복될 경우 처리
-			   
-				  
-			    /*
-			    // 서브미션의 응답 데이터를 처리하는 이벤트 핸들러 등록
-			    subMainList.addEventListener("submit-success", function(e) {
-			        var sms1 = e.control;
-			    
-				    var resCount = sms1.getResponseDataCount();
-				    for(var i = 0; i < resCount; i++){
-				        if(sms1.getResponseData(i).data.type == ""){
-				            console.log(sms1.getResponseData(i).data.getRowDataRanged());
-				        }else{
-				            console.log(sms1.getResponseData(i).data.getDatas());
-				        }
-				    }
-				        
-			        // 받은 응답 데이터를 처리하거나 필요한 작업을 수행할 수 있습니다.
-			        // 예를 들어, 받은 데이터를 그리드에 표시할 수 있습니다.
-			        // grd1.getBindDataset().setRecords(responseData);
-			    });
-			    */
-			    
-			    var totalPriceInput = app.lookup("TOTAL_PRICE");
-			    var changeAmountInput = app.lookup("changeAmount");
-			    var receivedAmountInput = app.lookup("receivedAmount");
-			    var usedPoint = app.lookup("usedPoint");
-			    receivedAmountInput.value = "";
-				changeAmountInput.value = "";
-				usedPoint.value = "";
-
-				
 			}
 
-			/*
-			 * 루트 컨테이너에서 load 이벤트 발생 시 호출.
-			 * 앱이 최초 구성된후 최초 랜더링 직후에 발생하는 이벤트 입니다.
-			 */
 			function onBodyLoad2(e) {
 			    var paramValue = cpr.core.Platform.INSTANCE.getParameter("cancelledItems");
 			    console.log(paramValue);
 			    
 			    if (paramValue) {
 			        var ds1 = app.lookup("ds1");
+			        var grd1 = app.lookup("grd1");
 			        
+			        
+			       
 			        // 취소된 품목들을 순회하면서 데이터셋에 추가
 			        for (var i = 0; i < paramValue.length; i++) {
 			            var item = paramValue[i];
 			            var barcode = item["barcode"];
 			            var qty = item["qty"];
-			            
-			            // 새로운 행을 추가하고 값을 설정
-			            ds1.addRow({"BAR_CODE": barcode, "QTY": qty});
-			        }
+			            var rowIndex = i ;
+			              
+			            // 바코드만 가져와서 검색실행하게 하고 싶지만 잘안됨...ㄴ
+			           // ds1.addRowData({"BAR_CODE": barcode, "QTY": qty});
+			        	grd1.insertRowData(rowIndex, false,{"BAR_CODE": barcode, "QTY": qty});
+						var qtySet = app.lookup("qtySET");
+			 	
+					 	qtySet.clear();
+					
+						 // 1부터 100까지의 값을 데이터셋에 추가합니다.
+					    for (var i = 1; i <= 100; i++) {
+					        // 각 값을 데이터셋에 추가합니다.
+					        qtySet.addRowData({
+					            "label": (i + ''), // 레이블은 값을 문자열로 설정합니다.
+					            "value": (i + '') // 값도 문자열로 설정합니다.
+					        });
+					    }
+			        	getProductOne(barcode);
+			        }       
 			    }
 			};
 			// End - User Script
@@ -1488,7 +1496,7 @@
 							"configurator": function(cell){
 								cell.columnName = "BAR_CODE";
 								cell.control = (function(){
-									var searchInput_1 = new cpr.controls.SearchInput();
+									var searchInput_1 = new cpr.controls.SearchInput("searchInput");
 									if(typeof onSearchInputSearch == "function") {
 										searchInput_1.addEventListener("search", onSearchInputSearch);
 									}
@@ -1497,6 +1505,9 @@
 									}
 									if(typeof onSearchInputInput == "function") {
 										searchInput_1.addEventListener("input", onSearchInputInput);
+									}
+									if(typeof onSearchInputContextValueChange == "function") {
+										searchInput_1.addEventListener("context-value-change", onSearchInputContextValueChange);
 									}
 									searchInput_1.bind("value").toDataColumn("BAR_CODE");
 									return searchInput_1;

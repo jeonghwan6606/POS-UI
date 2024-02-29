@@ -83,10 +83,11 @@
       <cl:griddetail std:sid="gd-band-7ef97004">
         <cl:gridrow std:sid="g-row-e693cbb1"/>
         <cl:gridcell std:sid="gd-cell-e5ca6e77" rowindex="0" colindex="1" columnname="BAR_CODE">
-          <cl:searchinput std:sid="s-input-5bb3dfe6">
+          <cl:searchinput std:sid="s-input-5bb3dfe6" id="searchInput">
             <cl:listener std:sid="listener-56932795" name="search" handler="onSearchInputSearch"/>
             <cl:listener std:sid="listener-42461237" name="value-change" handler="onSearchInputValueChange2"/>
             <cl:listener std:sid="listener-aa6f93fa" name="input" handler="onSearchInputInput"/>
+            <cl:listener std:sid="listener-210cb25e" name="context-value-change" handler="onSearchInputContextValueChange"/>
             <cl:celldata std:sid="c-data-2546c6ab"/>
           </cl:searchinput>
         </cl:gridcell>
