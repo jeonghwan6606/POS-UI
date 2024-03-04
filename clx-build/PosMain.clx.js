@@ -1252,9 +1252,7 @@
 			    if (paramValue) {
 			        var ds1 = app.lookup("ds1");
 			        var grd1 = app.lookup("grd1");
-			        
-			        
-			       
+			             
 			        // 취소된 품목들을 순회하면서 데이터셋에 추가
 			        for (var i = 0; i < paramValue.length; i++) {
 			            var item = paramValue[i];
@@ -1263,20 +1261,21 @@
 			            var rowIndex = i ;
 			              
 			            // 바코드만 가져와서 검색실행하게 하고 싶지만 잘안됨...ㄴ
-			           // ds1.addRowData({"BAR_CODE": barcode, "QTY": qty});
+			            // ds1.addRowData({"BAR_CODE": barcode, "QTY": qty});
 			        	grd1.insertRowData(rowIndex, false,{"BAR_CODE": barcode, "QTY": qty});
 						var qtySet = app.lookup("qtySET");
 			 	
 					 	qtySet.clear();
 					
 						 // 1부터 100까지의 값을 데이터셋에 추가합니다.
-					    for (var i = 1; i <= 100; i++) {
+					    for (var a = 1; a <= 100; a++) {
 					        // 각 값을 데이터셋에 추가합니다.
 					        qtySet.addRowData({
-					            "label": (i + ''), // 레이블은 값을 문자열로 설정합니다.
-					            "value": (i + '') // 값도 문자열로 설정합니다.
+					            "label": (a + ''), // 레이블은 값을 문자열로 설정합니다.
+					            "value": (a + '') // 값도 문자열로 설정합니다.
 					        });
 					    }
+					    console.log(i+"번째 바코드:",barcode);
 			        	getProductOne(barcode);
 			        }       
 			    }
