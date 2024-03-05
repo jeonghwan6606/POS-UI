@@ -188,7 +188,7 @@
         <cl:listener std:sid="listener-fc735341" name="value-change" handler="onID_NOValueChange2"/>
         <cl:xylayoutdata std:sid="xyl-data-28a24281" top="134px" left="100px" width="150px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
-      <cl:inputbox std:sid="i-box-153bc903" id="BUSI_NO" style="border-radius:0px 3px 3px 0px;" lengthunit="utf8" maxlength="10" inputfilter="[0-9]">
+      <cl:inputbox std:sid="i-box-153bc903" id="BUSI_NO" style="border-radius:0px 3px 3px 0px;" readonly="true" lengthunit="utf8" maxlength="10" inputfilter="[0-9]">
         <cl:listener std:sid="listener-60f6cbb3" name="input" handler="onBUSI_NOInput"/>
         <cl:xylayoutdata std:sid="xyl-data-16a9ced0" top="134px" left="380px" width="150px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
@@ -220,10 +220,10 @@
       <cl:htmlsnippet std:sid="htmlsnippet-8c149a69" style="background-color:#ededed; border-radius:5px 0px 0px 5px; background-image:none; text-align:center;" value="주소">
         <cl:xylayoutdata std:sid="xyl-data-16204f15" top="99px" left="10px" width="90px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:htmlsnippet>
-      <cl:htmlsnippet std:sid="htmlsnippet-d5a87b4e" style="background-color:#ededed; border-radius:5px 0px 0px 5px; background-image:none; text-align:center;" value="*주민번호">
+      <cl:htmlsnippet std:sid="htmlsnippet-d5a87b4e" id="idSnp" style="background-color:#ededed; border-radius:5px 0px 0px 5px; background-image:none; text-align:center;" value="*주민번호">
         <cl:xylayoutdata std:sid="xyl-data-f4ae5181" top="134px" left="10px" width="90px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:htmlsnippet>
-      <cl:htmlsnippet std:sid="htmlsnippet-a8d77c32" style="background-color:#ededed; border-radius:5px 0px 0px 5px; background-image:none; text-align:center;" value="*사업자 번호">
+      <cl:htmlsnippet std:sid="htmlsnippet-a8d77c32" style="background-color:#ededed; border-radius:5px 0px 0px 5px; background-image:none; text-align:center;" value="사업자 번호">
         <cl:xylayoutdata std:sid="xyl-data-f7a4566b" top="134px" left="290px" width="90px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:htmlsnippet>
       <cl:htmlsnippet std:sid="htmlsnippet-87eb1063" style="background-color:#ededed; border-radius:5px 0px 0px 5px; background-image:none; text-align:center;" value="회원 포인트">
@@ -239,6 +239,10 @@
         <cl:listener std:sid="listener-6e8775dc" name="click" handler="onButtonClick7"/>
         <cl:xylayoutdata std:sid="xyl-data-8e85f8af" top="41px" left="585px" width="49px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:button>
+      <cl:inputbox std:sid="i-box-15894fc3" id="PERS_COP_TY" style="border-radius:0px 3px 3px 0px;" visible="false" lengthunit="utf8" maxlength="10" inputfilter="[0-9]">
+        <cl:listener std:sid="listener-1249997e" name="value-change" handler="onPERS_COP_TYValueChange"/>
+        <cl:xylayoutdata std:sid="xyl-data-29773b36" top="10px" left="130px" width="120px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      </cl:inputbox>
       <cl:xylayout std:sid="xylayout-7e68594b"/>
     </cl:group>
     <cl:embeddedapp std:sid="e-app-3dec7bd4" id="ea1" src="PosHeader.clx">

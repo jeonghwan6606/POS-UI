@@ -95,6 +95,13 @@ function onButtonClick(e){
         app.lookup("ID_NO").focus(); // 포커스 주기
    		return;
     }
+    
+     if (BUSI_NO.length !== 10) {
+    	alert("사업자번호를 10자리로 입력해주세요");
+        ID_NO = ""; // 값 초기화
+        app.lookup("BUSI_NO").focus(); // 포커스 주기
+   		return;
+    }
 
     // 필수 항목에 대한 공백 확인
     if (MEMB_SER_NO === "" || MEMB_NM === "" || MOB_PH_NO === "") {
@@ -154,9 +161,15 @@ function onButtonClick(e){
 	    console.log(jsonObj);    
        
         var message = jsonObj.message;
+        var result = jsonObj.result;
+        console.log(result);
+        
     	alert(message);
+        
+        if(result == 1){
        
-        location.reload(); 
+        	location.reload();
+        } 
     });
 }
 

@@ -8,6 +8,7 @@
           <cl:datacolumn std:sid="d-column-c789da1e" name="MEMB_SER_NO"/>
           <cl:datacolumn std:sid="d-column-fba50a19" name="MEMB_NM"/>
           <cl:datacolumn std:sid="d-column-aa16f23d" name="MOB_PH_NO"/>
+          <cl:datacolumn std:sid="d-column-f17214c8" name="PERS_COP_TY"/>
         </cl:datacolumnlist>
         <cl:datarowlist/>
       </cl:dataset>
@@ -38,6 +39,7 @@
       <cl:gridcolumn std:sid="g-column-b142682f"/>
       <cl:gridcolumn std:sid="g-column-65d8ddd3"/>
       <cl:gridcolumn std:sid="g-column-c2e92bd4" visible="false"/>
+      <cl:gridcolumn std:sid="g-column-623fc779" visible="false"/>
       <cl:gridheader std:sid="gh-band-b8df4591">
         <cl:gridrow std:sid="g-row-41375e62"/>
         <cl:gridcell std:sid="gh-cell-05abd027" rowindex="0" colindex="0"/>
@@ -45,6 +47,7 @@
         <cl:gridcell std:sid="gh-cell-762d84ac" rowindex="0" colindex="2" targetcolumnname="MEMB_NM" sortable="false" filterable="false" text="회원명"/>
         <cl:gridcell std:sid="gh-cell-ea6fbd5d" rowindex="0" colindex="3" targetcolumnname="MOB_PH_NO" sortable="false" filterable="false" text="전화번호"/>
         <cl:gridcell std:sid="gh-cell-fee44d94" rowindex="0" colindex="4" text="주민번호"/>
+        <cl:gridcell std:sid="gh-cell-a9cb0a5a" rowindex="0" colindex="5" text="법인구분"/>
       </cl:gridheader>
       <cl:griddetail std:sid="gd-band-ecddc198">
         <cl:gridrow std:sid="g-row-def7dcd3"/>
@@ -54,6 +57,11 @@
         <cl:gridcell std:sid="gd-cell-7ec75c05" rowindex="0" colindex="3" columnname="MOB_PH_NO"/>
         <cl:gridcell std:sid="gd-cell-3f74f381" rowindex="0" colindex="4" columnname="ID_NO">
           <cl:output std:sid="output-577d3bf3">
+            <cl:celldata std:sid="c-data-cd0d493f"/>
+          </cl:output>
+        </cl:gridcell>
+        <cl:gridcell std:sid="gd-cell-262d99c9" rowindex="0" colindex="5" columnname="PERS_COP_TY">
+          <cl:output std:sid="output-4f08afb5">
             <cl:celldata/>
           </cl:output>
         </cl:gridcell>

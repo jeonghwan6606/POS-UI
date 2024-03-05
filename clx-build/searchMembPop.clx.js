@@ -121,7 +121,7 @@
 				        ds2.setValue(lastIndex, "MEMB_NM", rowData.MEMB_NM);
 				        ds2.setValue(lastIndex, "MEMB_SER_NO", rowData.MEMB_SER_NO);
 				        ds2.setValue(lastIndex, "MOB_PH_NO", rowData.MOB_PH_NO);
-				                 
+				        ds2.setValue(lastIndex, "PERS_COP_TY", rowData.PERS_COP_TY)             
 				    }
 				
 				});
@@ -149,8 +149,9 @@
 			    
 			    // 선택된 행의 데이터에서 필드 값을 가져옵니다.
 			    var MEMB_NM = rowData["MEMB_NM"];
-			    var MEMB_SER_NO = rowData["MEMB_SER_NO"]
-			    var ID_NO = rowData["ID_NO"]
+			    var MEMB_SER_NO = rowData["MEMB_SER_NO"];
+			    var ID_NO = rowData["ID_NO"];
+			    var PERS_COP_TY = rowData["PERS_COP_TY"];
 			    
 			    console.log(MEMB_SER_NO);
 			    
@@ -158,7 +159,8 @@
 			    window.opener.postMessage({
 			        MEMB_SER_NO: MEMB_SER_NO,
 			        MEMB_NM: MEMB_NM,
-			        ID_NO: ID_NO
+			        ID_NO: ID_NO,
+			        PERS_COP_TY: PERS_COP_TY
 			    }, "*");
 			    
 			    // 자식 창을 닫습니다.
@@ -190,7 +192,8 @@
 				"columns": [
 					{"name": "MEMB_SER_NO"},
 					{"name": "MEMB_NM"},
-					{"name": "MOB_PH_NO"}
+					{"name": "MOB_PH_NO"},
+					{"name": "PERS_COP_TY"}
 				],
 				"rows": []
 			});
@@ -258,6 +261,10 @@
 					{
 						"width": "100px",
 						"visible": false
+					},
+					{
+						"width": "100px",
+						"visible": false
 					}
 				],
 				"header": {
@@ -300,6 +307,12 @@
 							"configurator": function(cell){
 								cell.text = "주민번호";
 							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 5},
+							"configurator": function(cell){
+								cell.text = "법인구분";
+							}
 						}
 					]
 				},
@@ -338,6 +351,17 @@
 									var output_2 = new cpr.controls.Output();
 									output_2.bind("value").toDataColumn("ID_NO");
 									return output_2;
+								})();
+							}
+						},
+						{
+							"constraint": {"rowIndex": 0, "colIndex": 5},
+							"configurator": function(cell){
+								cell.columnName = "PERS_COP_TY";
+								cell.control = (function(){
+									var output_3 = new cpr.controls.Output();
+									output_3.bind("value").toDataColumn("PERS_COP_TY");
+									return output_3;
 								})();
 							}
 						}

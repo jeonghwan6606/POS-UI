@@ -301,6 +301,8 @@
 						
 						    // 찾은 행이 있으면 해당 데이터를 화면에 표시
 						    if (matchedRow) {
+						    	
+						    	app.lookup("PERS_COP_TY").value = matchedRow["PERS_COP_TY"] || "";
 						        app.lookup("ID_NO").value = matchedRow["ID_NO"] || "";
 						        app.lookup("ADDR").value = (matchedRow["ADDR_1"] || "") + " " + (matchedRow["ADDR_2"] || "");
 						        app.lookup("MEMB_NM").value = matchedRow["MEMB_NM"] || "";
@@ -308,7 +310,10 @@
 						        app.lookup("MEMB_SER_NO").value = matchedRow["MEMB_SER_NO"] || "";
 						        app.lookup("PH_NO").value = matchedRow["MOB_PH_NO"] || "";
 						        app.lookup("POINT").value = matchedRow["POINT"] || "";
+						    	
 						    }
+						       var PERS_COP_TY = app.lookup("PERS_COP_TY").value;
+							   console.log(PERS_COP_TY);		    
 						});
 				    } else {
 				        // memb 데이터셋이 없는 경우, 에러 처리 또는 기타 로직 수행
@@ -763,6 +768,7 @@
 			    app.lookup("MEMB_SER_NO").value = "";
 			    app.lookup("PH_NO").value = "";
 			    app.lookup("POINT").value = "";
+			    app.lookup("PERS_COP_TY").value = "";
 			}
 
 			/*
@@ -819,13 +825,17 @@
 				var name = app.lookup("MEMB_NM");
 				var membNo= app.lookup("MEMB_SER_NO");
 				var idNo = app.lookup("ID_NO");
-				var ADDR = app.lookup("ADDR")
-				var busiNo = app.lookup("BUSI_NO")
-				var membSerNo = app.lookup("MEMB_SER_NO")
-				var phNo = app.lookup("PH_NO")
-				
+				var ADDR = app.lookup("ADDR");
+				var busiNo = app.lookup("BUSI_NO");
+				var phNo = app.lookup("PH_NO");
+				var membPoint = app.lookup("POINT");
 				
 				membNo.value ="";
+				var persCopTy = app.lookup("PERS_COP_TY");
+				persCopTy.value = "1";
+				ADDR.value ="";
+				busiNo.value ="";
+				membPoint.value ="";
 			}
 
 			/*
@@ -838,7 +848,15 @@
 				var membNo= app.lookup("MEMB_SER_NO");
 				
 				membNo.value ="";
-				
+				var persCopTy = app.lookup("PERS_COP_TY");
+				persCopTy = "1";
+
+			    var ADDR = app.lookup("ADDR");
+			    var busiNo = app.lookup("BUSI_NO");
+			    var membPoint = app.lookup("POINT");
+				ADDR.value ="";
+				busiNo.value ="";
+				membPoint.value ="";
 			}
 
 			/*
@@ -848,8 +866,17 @@
 			function onID_NOInput(e){
 				var iD_NO = e.control;
 				var membNo= app.lookup("MEMB_SER_NO");
+				var persCopTy = app.lookup("PERS_COP_TY");
 				
 				membNo.value ="";
+				persCopTy.value = "1";
+				
+				var ADDR = app.lookup("ADDR");
+			    var busiNo = app.lookup("BUSI_NO");
+			    var membPoint = app.lookup("POINT");
+				ADDR.value ="";
+				busiNo.value ="";
+				membPoint.value ="";
 			}
 
 			/*
@@ -885,10 +912,16 @@
 			function onID_NOValueChange2(e){
 				var iD_NO = e.control;
 			    var ssn = iD_NO.value;
+				var persCopTy = app.lookup("PERS_COP_TY").value;
 				
+				console.log("onId_NOValueChange2 persCopTy:",persCopTy);
 				// 공백인 경우에는 유효성 검사를 실행하지 않음
 				if (ssn === '') {
 				    return;
+				}
+				
+				if(persCopTy === '2'){
+					return;
 				}
 					
 			    if (!isValidSSN(ssn)) {
@@ -1279,6 +1312,26 @@
 			        	getProductOne(barcode);
 			        }       
 			    }
+			}
+
+			/*
+			 * 인풋 박스에서 value-change 이벤트 발생 시 호출.
+			 * 변경된 value가 저장된 후에 발생하는 이벤트.
+			 */
+			function onPERS_COP_TYValueChange(e){
+				var pERS_COP_TY = e.control;
+				
+				console.log("pERS_COP_TY:",pERS_COP_TY.value);
+				
+				var idLabel = app.lookup("idSnp");
+				
+				if(pERS_COP_TY.value==='2'){
+					
+					idLabel.value = "법인번호";
+				}else{
+					idLabel.value = "주민번호";
+					return;
+				}
 			};
 			// End - User Script
 			
@@ -1854,6 +1907,7 @@
 					"height": "25px"
 				});
 				var inputBox_8 = new cpr.controls.InputBox("BUSI_NO");
+				inputBox_8.readOnly = true;
 				inputBox_8.lengthUnit = "utf8";
 				inputBox_8.maxLength = 10;
 				inputBox_8.inputFilter = "[0-9]";
@@ -1973,7 +2027,7 @@
 					"width": "90px",
 					"height": "25px"
 				});
-				var hTMLSnippet_7 = new cpr.controls.HTMLSnippet();
+				var hTMLSnippet_7 = new cpr.controls.HTMLSnippet("idSnp");
 				hTMLSnippet_7.value = "*주민번호";
 				hTMLSnippet_7.style.css({
 					"background-color" : "#ededed",
@@ -1988,7 +2042,7 @@
 					"height": "25px"
 				});
 				var hTMLSnippet_8 = new cpr.controls.HTMLSnippet();
-				hTMLSnippet_8.value = "*사업자 번호";
+				hTMLSnippet_8.value = "사업자 번호";
 				hTMLSnippet_8.style.css({
 					"background-color" : "#ededed",
 					"border-radius" : "5px 0px 0px 5px",
@@ -2063,6 +2117,23 @@
 					"width": "49px",
 					"height": "25px"
 				});
+				var inputBox_11 = new cpr.controls.InputBox("PERS_COP_TY");
+				inputBox_11.visible = false;
+				inputBox_11.lengthUnit = "utf8";
+				inputBox_11.maxLength = 10;
+				inputBox_11.inputFilter = "[0-9]";
+				inputBox_11.style.css({
+					"border-radius" : "0px 3px 3px 0px"
+				});
+				if(typeof onPERS_COP_TYValueChange == "function") {
+					inputBox_11.addEventListener("value-change", onPERS_COP_TYValueChange);
+				}
+				container.addChild(inputBox_11, {
+					"top": "10px",
+					"left": "130px",
+					"width": "120px",
+					"height": "25px"
+				});
 			})(group_1);
 			container.addChild(group_1, {
 				"top": "516px",
@@ -2112,36 +2183,36 @@
 				"height": "25px"
 			});
 			
-			var inputBox_11 = new cpr.controls.InputBox("Total_Buy");
-			inputBox_11.visible = false;
-			inputBox_11.readOnly = true;
-			inputBox_11.lengthUnit = "utf8";
-			inputBox_11.style.css({
+			var inputBox_12 = new cpr.controls.InputBox("Total_Buy");
+			inputBox_12.visible = false;
+			inputBox_12.readOnly = true;
+			inputBox_12.lengthUnit = "utf8";
+			inputBox_12.style.css({
 				"border-radius" : "0px 3px 3px 0px"
 			});
-			container.addChild(inputBox_11, {
+			container.addChild(inputBox_12, {
 				"top": "715px",
 				"left": "121px",
 				"width": "150px",
 				"height": "25px"
 			});
 			
-			var inputBox_12 = new cpr.controls.InputBox("usedPoint");
-			inputBox_12.readOnly = true;
-			inputBox_12.inputFilter = "[0-9]";
-			inputBox_12.style.css({
+			var inputBox_13 = new cpr.controls.InputBox("usedPoint");
+			inputBox_13.readOnly = true;
+			inputBox_13.inputFilter = "[0-9]";
+			inputBox_13.style.css({
 				"border-radius" : "0px 3px 3px 0px"
 			});
 			if(typeof onUsedPointValueChange == "function") {
-				inputBox_12.addEventListener("value-change", onUsedPointValueChange);
+				inputBox_13.addEventListener("value-change", onUsedPointValueChange);
 			}
 			if(typeof onUsedPointInput == "function") {
-				inputBox_12.addEventListener("input", onUsedPointInput);
+				inputBox_13.addEventListener("input", onUsedPointInput);
 			}
 			if(typeof onUsedPointBeforeValueChange == "function") {
-				inputBox_12.addEventListener("before-value-change", onUsedPointBeforeValueChange);
+				inputBox_13.addEventListener("before-value-change", onUsedPointBeforeValueChange);
 			}
-			container.addChild(inputBox_12, {
+			container.addChild(inputBox_13, {
 				"top": "597px",
 				"left": "744px",
 				"width": "150px",

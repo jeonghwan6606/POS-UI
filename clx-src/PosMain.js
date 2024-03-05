@@ -288,6 +288,8 @@ function onButtonClick4(e) {
 			
 			    // 찾은 행이 있으면 해당 데이터를 화면에 표시
 			    if (matchedRow) {
+			    	
+			    	app.lookup("PERS_COP_TY").value = matchedRow["PERS_COP_TY"] || "";
 			        app.lookup("ID_NO").value = matchedRow["ID_NO"] || "";
 			        app.lookup("ADDR").value = (matchedRow["ADDR_1"] || "") + " " + (matchedRow["ADDR_2"] || "");
 			        app.lookup("MEMB_NM").value = matchedRow["MEMB_NM"] || "";
@@ -295,7 +297,10 @@ function onButtonClick4(e) {
 			        app.lookup("MEMB_SER_NO").value = matchedRow["MEMB_SER_NO"] || "";
 			        app.lookup("PH_NO").value = matchedRow["MOB_PH_NO"] || "";
 			        app.lookup("POINT").value = matchedRow["POINT"] || "";
+			    	
 			    }
+			       var PERS_COP_TY = app.lookup("PERS_COP_TY").value;
+				   console.log(PERS_COP_TY);		    
 			});
 	    } else {
 	        // memb 데이터셋이 없는 경우, 에러 처리 또는 기타 로직 수행
@@ -750,6 +755,7 @@ function membReset(){
     app.lookup("MEMB_SER_NO").value = "";
     app.lookup("PH_NO").value = "";
     app.lookup("POINT").value = "";
+    app.lookup("PERS_COP_TY").value = "";
 }
 
 /*
@@ -806,13 +812,17 @@ function onPH_NOInput(e){
 	var name = app.lookup("MEMB_NM");
 	var membNo= app.lookup("MEMB_SER_NO");
 	var idNo = app.lookup("ID_NO");
-	var ADDR = app.lookup("ADDR")
-	var busiNo = app.lookup("BUSI_NO")
-	var membSerNo = app.lookup("MEMB_SER_NO")
-	var phNo = app.lookup("PH_NO")
-	
+	var ADDR = app.lookup("ADDR");
+	var busiNo = app.lookup("BUSI_NO");
+	var phNo = app.lookup("PH_NO");
+	var membPoint = app.lookup("POINT");
 	
 	membNo.value ="";
+	var persCopTy = app.lookup("PERS_COP_TY");
+	persCopTy.value = "1";
+	ADDR.value ="";
+	busiNo.value ="";
+	membPoint.value ="";
 }
 
 /*
@@ -825,7 +835,15 @@ function onMEMB_NMInput2(e){
 	var membNo= app.lookup("MEMB_SER_NO");
 	
 	membNo.value ="";
-	
+	var persCopTy = app.lookup("PERS_COP_TY");
+	persCopTy = "1";
+
+    var ADDR = app.lookup("ADDR");
+    var busiNo = app.lookup("BUSI_NO");
+    var membPoint = app.lookup("POINT");
+	ADDR.value ="";
+	busiNo.value ="";
+	membPoint.value ="";
 }
 
 /*
@@ -835,8 +853,17 @@ function onMEMB_NMInput2(e){
 function onID_NOInput(e){
 	var iD_NO = e.control;
 	var membNo= app.lookup("MEMB_SER_NO");
+	var persCopTy = app.lookup("PERS_COP_TY");
 	
 	membNo.value ="";
+	persCopTy.value = "1";
+	
+	var ADDR = app.lookup("ADDR");
+    var busiNo = app.lookup("BUSI_NO");
+    var membPoint = app.lookup("POINT");
+	ADDR.value ="";
+	busiNo.value ="";
+	membPoint.value ="";
 }
 
 /*
@@ -872,10 +899,16 @@ function onTOTAL_PRICEValueChange(e){
 function onID_NOValueChange2(e){
 	var iD_NO = e.control;
     var ssn = iD_NO.value;
+	var persCopTy = app.lookup("PERS_COP_TY").value;
 	
+	console.log("onId_NOValueChange2 persCopTy:",persCopTy);
 	// 공백인 경우에는 유효성 검사를 실행하지 않음
 	if (ssn === '') {
 	    return;
+	}
+	
+	if(persCopTy === '2'){
+		return;
 	}
 		
     if (!isValidSSN(ssn)) {
@@ -1268,4 +1301,22 @@ function onBodyLoad2(e) {
     }
 }
 
-
+/*
+ * 인풋 박스에서 value-change 이벤트 발생 시 호출.
+ * 변경된 value가 저장된 후에 발생하는 이벤트.
+ */
+function onPERS_COP_TYValueChange(e){
+	var pERS_COP_TY = e.control;
+	
+	console.log("pERS_COP_TY:",pERS_COP_TY.value);
+	
+	var idLabel = app.lookup("idSnp");
+	
+	if(pERS_COP_TY.value==='2'){
+		
+		idLabel.value = "법인번호";
+	}else{
+		idLabel.value = "주민번호";
+		return;
+	}
+}
