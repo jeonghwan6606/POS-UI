@@ -70,6 +70,16 @@ function onAccountManageClick(e){
 }
 
 
+/*
+ * "매장관리" 버튼(storeManage)에서 click 이벤트 발생 시 호출.
+ * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+ */
+function onStoreManageClick(e){
+	var page = "/POS/PosProductList.do";
+	window.location.href = page;
+}
+
+
 function updateDate() {
     var displayElement = app.lookup("display"); // 날짜와 시간을 표시할 요소
 
@@ -91,3 +101,4 @@ function updateDate() {
 function onBodyInit(e){
 	updateDate();
 }
+

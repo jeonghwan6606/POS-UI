@@ -1332,6 +1332,16 @@
 					idLabel.value = "주민번호";
 					return;
 				}
+			}
+
+			/*
+			 * "매장관리" 버튼(storeManage)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onStoreManageClick(e){
+				var storeManage = e.control;
+				var page = "/POS/PosProductList.do";
+				window.location.href = page;
 			};
 			// End - User Script
 			
@@ -2232,6 +2242,18 @@
 				"left": "683px",
 				"width": "61px",
 				"height": "29px"
+			});
+			
+			var button_8 = new cpr.controls.Button("storeManage");
+			button_8.value = "매장관리";
+			if(typeof onStoreManageClick == "function") {
+				button_8.addEventListener("click", onStoreManageClick);
+			}
+			container.addChild(button_8, {
+				"top": "246px",
+				"left": "0px",
+				"width": "100px",
+				"height": "38px"
 			});
 			if(typeof onBodyLoad2 == "function"){
 				app.addEventListener("load", onBodyLoad2);

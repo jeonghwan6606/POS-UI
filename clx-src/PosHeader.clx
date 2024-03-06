@@ -44,6 +44,7 @@
           <cl:xylayoutdata std:sid="xyl-data-ae405c99" top="21px" left="791px" width="100px" height="38px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
         </cl:button>
         <cl:button std:sid="button-8dddc87f" id="storeManage" value="매장관리">
+          <cl:listener std:sid="listener-968fcd3d" name="click" handler="onStoreManageClick"/>
           <cl:xylayoutdata std:sid="xyl-data-88ca99ce" top="21px" left="899px" width="100px" height="38px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
         </cl:button>
         <cl:xylayout std:sid="xylayout-6eff429f"/>

@@ -83,6 +83,16 @@
 			}
 
 
+			/*
+			 * "매장관리" 버튼(storeManage)에서 click 이벤트 발생 시 호출.
+			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
+			 */
+			function onStoreManageClick(e){
+				var page = "/POS/PosProductList.do";
+				window.location.href = page;
+			}
+
+
 			function updateDate() {
 			    var displayElement = app.lookup("display"); // 날짜와 시간을 표시할 요소
 
@@ -216,6 +226,9 @@
 					});
 					var button_7 = new cpr.controls.Button("storeManage");
 					button_7.value = "매장관리";
+					if(typeof onStoreManageClick == "function") {
+						button_7.addEventListener("click", onStoreManageClick);
+					}
 					container.addChild(button_7, {
 						"top": "21px",
 						"left": "899px",
