@@ -122,7 +122,7 @@
       </cl:group>
       <cl:xylayout std:sid="xylayout-f61786f5"/>
     </cl:group>
-    <cl:output std:sid="output-b7e08dac" id="title" style="font-weight:bold; font-size:25px; text-align:center;" value="거래처 관리">
+    <cl:output std:sid="output-b7e08dac" id="title" style="font-weight:bold; font-size:25px; text-align:center;" value="거래처 등록">
       <cl:xylayoutdata std:sid="xyl-data-551bcb56" top="90px" left="353px" width="318px" height="50px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:output>
     <cl:xylayout std:sid="xylayout-3b259add"/>

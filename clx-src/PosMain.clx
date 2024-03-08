@@ -267,10 +267,6 @@
     <cl:htmlsnippet std:sid="htmlsnippet-76d1cee2" style="border-radius:10px 0px 0px 10px; background-color:#EDEDED; vertical-align:middle; text-align:center;" value="포인트">
       <cl:xylayoutdata std:sid="xyl-data-94705ca6" top="597px" left="683px" width="61px" height="29px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:htmlsnippet>
-    <cl:button std:sid="button-8dddc87f" id="storeManage" value="매장관리">
-      <cl:listener std:sid="listener-4d3a27d9" name="click" handler="onStoreManageClick"/>
-      <cl:xylayoutdata std:sid="xyl-data-d63979f6" top="246px" left="0px" width="100px" height="38px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-    </cl:button>
     <cl:xylayout std:sid="xylayout-004fcdef"/>
   </body>
   <std:studiosetting>

@@ -51,8 +51,11 @@
 			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
 			 */
 			function onProductManageClick(e){
-				var page = "/POS/PosProductRegist1.do";
+				
+				var page = "/POS/PosProductList.do";
 				window.location.href = page;
+				//var page = "/POS/PosProductRegist1.do";
+				//window.location.href = page;
 			}
 
 			/*
@@ -88,8 +91,7 @@
 			 * 사용자가 컨트롤을 클릭할 때 발생하는 이벤트.
 			 */
 			function onStoreManageClick(e){
-				var page = "/POS/PosProductList.do";
-				window.location.href = page;
+				
 			}
 
 

@@ -843,7 +843,7 @@
 			});
 			
 			var output_17 = new cpr.controls.Output("title");
-			output_17.value = "상품 관리";
+			output_17.value = "상품 등록";
 			output_17.style.css({
 				"font-weight" : "bold",
 				"font-size" : "25px",

@@ -10,7 +10,12 @@
           <cl:datacolumn std:sid="d-column-b5a24e41" name="label"/>
           <cl:datacolumn std:sid="d-column-7c9a6701" name="value"/>
         </cl:datacolumnlist>
-        <cl:datarowlist/>
+        <cl:datarowlist>
+          <cl:datarow>
+            <cl:datavalue columnname="label"><![CDATA[전체]]></cl:datavalue>
+            <cl:datavalue columnname="value"><![CDATA[]]></cl:datavalue>
+          </cl:datarow>
+        </cl:datarowlist>
       </cl:dataset>
       <cl:dataset std:sid="d-set-4310a227" id="ds1">
         <cl:datacolumnlist>
@@ -108,44 +113,41 @@
       <cl:listener std:sid="listener-fad1afd8" name="selection-change" handler="onGrd1SelectionChange"/>
       <cl:listener std:sid="listener-7007a054" name="row-radio-selected" handler="onGrd1RowRadioSelected"/>
       <cl:listener std:sid="listener-95a23b46" name="insert" handler="onGrd1Insert"/>
-      <cl:xylayoutdata std:sid="xyl-data-14caaf82" top="190px" left="20px" width="982px" height="521px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      <cl:gridcolumn std:sid="g-column-9f405556" width="25px"/>
+      <cl:xylayoutdata std:sid="xyl-data-14caaf82" top="190px" left="20px" width="982px" height="371px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       <cl:gridcolumn std:sid="g-column-5f607f4f" width="84px"/>
       <cl:gridcolumn std:sid="g-column-ba893842" width="94px"/>
-      <cl:gridcolumn std:sid="g-column-ce582dcb"/>
-      <cl:gridcolumn std:sid="g-column-5d00f95c"/>
-      <cl:gridcolumn std:sid="g-column-5d8483a9" width="146px"/>
+      <cl:gridcolumn std:sid="g-column-ce582dcb" width="139px"/>
+      <cl:gridcolumn std:sid="g-column-5d00f95c" width="74px"/>
+      <cl:gridcolumn std:sid="g-column-5d8483a9" width="112px"/>
       <cl:gridcolumn std:sid="g-column-28a69207"/>
       <cl:gridcolumn std:sid="g-column-c2fb8dbb" visible="false"/>
       <cl:gridheader std:sid="gh-band-ca33cc1e">
         <cl:gridrow std:sid="g-row-db05c02a"/>
-        <cl:gridcell std:sid="gh-cell-1288466b" rowindex="0" colindex="0" sortable="false" filterable="false"/>
-        <cl:gridcell std:sid="gh-cell-e2c0c0fa" rowindex="0" colindex="1" targetcolumnname="PROD_CD" sortable="false" filterable="false" text="상품코드"/>
-        <cl:gridcell std:sid="gh-cell-5f1230c9" rowindex="0" colindex="2" targetcolumnname="PROD_CLS_NM" sortable="false" filterable="false" text="상품분류"/>
-        <cl:gridcell std:sid="gh-cell-7f43b7c0" rowindex="0" colindex="3" targetcolumnname="PROD_NM" sortable="false" filterable="false" text="상품명"/>
-        <cl:gridcell std:sid="gh-cell-47dbc8a4" rowindex="0" colindex="4" targetcolumnname="BAR_CODE" sortable="false" filterable="false" text="판매가"/>
-        <cl:gridcell std:sid="gh-cell-335d25f0" rowindex="0" colindex="5" targetcolumnname="BAR_CODE" sortable="false" filterable="false" text="바코드"/>
-        <cl:gridcell std:sid="gh-cell-58c1e5b0" rowindex="0" colindex="6" targetcolumnname="CLIENT_NM" text="거래처명"/>
-        <cl:gridcell std:sid="gh-cell-df7b6b43" rowindex="0" colindex="7" targetcolumnname="CLIENT_NO" text="CLIENT_NO"/>
+        <cl:gridcell std:sid="gh-cell-e2c0c0fa" rowindex="0" colindex="0" targetcolumnname="PROD_CD" sortable="false" filterable="false" text="상품코드"/>
+        <cl:gridcell std:sid="gh-cell-5f1230c9" rowindex="0" colindex="1" targetcolumnname="PROD_CLS_NM" sortable="false" filterable="false" text="상품분류"/>
+        <cl:gridcell std:sid="gh-cell-7f43b7c0" rowindex="0" colindex="2" targetcolumnname="PROD_NM" sortable="false" filterable="false" text="상품명"/>
+        <cl:gridcell std:sid="gh-cell-47dbc8a4" rowindex="0" colindex="3" targetcolumnname="BAR_CODE" sortable="false" filterable="false" text="판매가"/>
+        <cl:gridcell std:sid="gh-cell-335d25f0" rowindex="0" colindex="4" targetcolumnname="BAR_CODE" sortable="false" filterable="false" text="바코드"/>
+        <cl:gridcell std:sid="gh-cell-58c1e5b0" rowindex="0" colindex="5" targetcolumnname="CLIENT_NM" text="거래처명"/>
+        <cl:gridcell std:sid="gh-cell-df7b6b43" rowindex="0" colindex="6" targetcolumnname="CLIENT_NO" text="CLIENT_NO"/>
       </cl:gridheader>
       <cl:griddetail std:sid="gd-band-17a0acb0">
         <cl:gridrow std:sid="g-row-00552d61"/>
-        <cl:gridcell std:sid="gd-cell-e182fe90" rowindex="0" colindex="0" columntype="radio"/>
-        <cl:gridcell std:sid="gd-cell-41aab290" rowindex="0" colindex="1" columnname="PROD_CD"/>
-        <cl:gridcell std:sid="gd-cell-70997883" rowindex="0" colindex="2" columnname="PROD_CLS_NM"/>
-        <cl:gridcell std:sid="gd-cell-c770e37a" rowindex="0" colindex="3" columnname="PROD_NM"/>
-        <cl:gridcell std:sid="gd-cell-8894e44c" rowindex="0" colindex="4" columnname="SELL_PR">
-          <cl:numbereditor std:sid="n-editor-45fbe564" id="nbe1" readonly="true">
+        <cl:gridcell std:sid="gd-cell-41aab290" rowindex="0" colindex="0" columnname="PROD_CD"/>
+        <cl:gridcell std:sid="gd-cell-70997883" rowindex="0" colindex="1" columnname="PROD_CLS_NM"/>
+        <cl:gridcell std:sid="gd-cell-c770e37a" rowindex="0" colindex="2" columnname="PROD_NM"/>
+        <cl:gridcell std:sid="gd-cell-8894e44c" rowindex="0" colindex="3" columnname="SELL_PR">
+          <cl:numbereditor std:sid="n-editor-45fbe564" id="nbe1" style="text-align:center;" readonly="true">
             <cl:celldata std:sid="c-data-d37df3a4"/>
           </cl:numbereditor>
         </cl:gridcell>
-        <cl:gridcell std:sid="gd-cell-777e2757" rowindex="0" colindex="5" columnname="BAR_CODE"/>
-        <cl:gridcell std:sid="gd-cell-dcd571ba" rowindex="0" colindex="6" columnname="CLIENT_NM">
+        <cl:gridcell std:sid="gd-cell-777e2757" rowindex="0" colindex="4" columnname="BAR_CODE"/>
+        <cl:gridcell std:sid="gd-cell-dcd571ba" rowindex="0" colindex="5" columnname="CLIENT_NM">
           <cl:output std:sid="output-f40c75c6" style="text-align:center;">
             <cl:celldata std:sid="c-data-91e08796"/>
           </cl:output>
         </cl:gridcell>
-        <cl:gridcell std:sid="gd-cell-00560878" rowindex="0" colindex="7" columnname="CLIENT_NO">
+        <cl:gridcell std:sid="gd-cell-00560878" rowindex="0" colindex="6" columnname="CLIENT_NO">
           <cl:output std:sid="output-acd164d7">
             <cl:celldata std:sid="c-data-34917a1e"/>
           </cl:output>
@@ -166,7 +168,7 @@
         <cl:xylayoutdata std:sid="xyl-data-841eeaa4" top="10px" left="263px" width="448px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:inputbox>
       <cl:button std:sid="button-3cf77bba" value="조회">
-        <cl:listener std:sid="listener-12eb4717" name="click" handler="onButtonClick3"/>
+        <cl:listener std:sid="listener-55959cb6" name="click" handler="onButtonClick2"/>
         <cl:xylayoutdata std:sid="xyl-data-f6f61948" top="10px" left="905px" width="56px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
       </cl:button>
       <cl:xylayout std:sid="xylayout-aeed76ff"/>
@@ -174,14 +176,13 @@
     <cl:embeddedapp std:sid="e-app-3dec7bd4" id="ea1" src="PosHeader.clx">
       <cl:xylayoutdata std:sid="xyl-data-a0a712b7" top="0px" left="0px" width="1024px" height="80px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:embeddedapp>
-    <cl:radiobutton std:sid="r-button-fb3648b6" id="cancelRadio" value="0">
-      <cl:listener std:sid="listener-c08320c1" name="selection-change" handler="onCancelRadioSelectionChange"/>
-      <cl:xylayoutdata std:sid="xyl-data-ad193850" top="150px" left="802px" width="200px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
-      <cl:itemset datasetid="cancelDs" label="label" value="value"/>
-    </cl:radiobutton>
     <cl:pageindexer std:sid="p-indexer-8492a739">
-      <cl:xylayoutdata std:sid="xyl-data-6ab2cd23" top="721px" left="348px" width="332px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+      <cl:xylayoutdata std:sid="xyl-data-6ab2cd23" top="598px" left="326px" width="332px" height="40px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
     </cl:pageindexer>
+    <cl:button std:sid="button-6af36de7" value="등록">
+      <cl:listener std:sid="listener-1679d35a" name="click" handler="onButtonClick"/>
+      <cl:xylayoutdata std:sid="xyl-data-26cafe43" top="155px" left="946px" width="56px" height="25px" horizontalAnchor="LEFT" verticalAnchor="TOP"/>
+    </cl:button>
     <cl:xylayout std:sid="xylayout-e733efc0"/>
   </body>
   <std:studiosetting>

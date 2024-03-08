@@ -765,7 +765,7 @@
 			});
 			
 			var output_4 = new cpr.controls.Output("title");
-			output_4.value = "거래처 관리";
+			output_4.value = "거래처 등록";
 			output_4.style.css({
 				"font-weight" : "bold",
 				"font-size" : "25px",
